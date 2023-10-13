@@ -1,67 +1,80 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import EqualizerIcon from "@mui/icons-material/Equalizer";
 import PersonIcon from "@mui/icons-material/Person";
 import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import classes from "./SideBar.module.css";
+
 const SideBar = () => {
+  const navigate = useNavigate();
+
   return (
     <div
-      className="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark"
-      style={{ width: "300px", height: "100vh" }}
+      className={`d-flex flex-column flex-shrink-0 p-3`}
+      style={{
+        width: "14rem",
+        height: "100vh",
+        backgroundColor: "#F2EAE1",
+      }}
     >
-      <NavLink
-        to="/"
-        className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
-        end
+      <h5
+        style={{
+          fontFamily: "'Montserrat', sans-serif",
+          fontWeight: "bold",
+          cursor: "pointer",
+        }}
+        onClick={() => navigate("/")}
       >
-        <span className="fs-4 text-center">Student Management System</span>
-      </NavLink>
-      <hr />
-      <ul className="nav nav-pills flex-column mb-auto">
-        <li className="nav-item my-2">
+        Manage Students
+      </h5>
+
+      <ul
+        className={`nav nav-pills flex-column mb-auto mt-5 ${classes["slide-bar"]}`}
+      >
+        <li className=" my-2 text-center">
           <NavLink
             to="/"
             className={({ isActive }) =>
-              isActive ? "nav-link active" : "nav-link text-white"
+              isActive ? classes.active : undefined
             }
             end
           >
-            <EqualizerIcon sx={{ margin: "0px 2px" }} />
-            Dashboard
+            <EqualizerIcon sx={{ marginRight: "5px" }} />
+            <span>Dashboard</span>
           </NavLink>
         </li>
-        <li className="my-2">
+        <li className="my-2 text-center mx-4">
           <NavLink
             to="/students"
             className={({ isActive }) =>
-              isActive ? "nav-link active" : "nav-link text-white"
+              isActive ? "nav-link active" : undefined
             }
           >
-            <PersonIcon sx={{ margin: "0px 2px" }} />
-            Students
+            <PersonIcon sx={{ marginRight: "19px" }} />
+            <span>Students</span>
           </NavLink>
         </li>
-        <li className="my-2">
+        <li className="my-2 text-center mx-4">
           <NavLink
             to="/courses"
             className={({ isActive }) =>
-              isActive ? "nav-link active" : "nav-link text-white"
+              isActive ? "nav-link active" : undefined
             }
           >
-            <LibraryBooksIcon sx={{ margin: "0px 2px" }} />
-            Courses
+            <LibraryBooksIcon sx={{ marginRight: "25px" }} />
+            <span>Courses</span>
           </NavLink>
         </li>
-        <li className="my-2">
+        <li className="my-2 ms-4 text-center mx-4">
           <NavLink
             to="/attendence"
             className={({ isActive }) =>
-              isActive ? "nav-link active" : "nav-link text-white"
+              isActive ? "nav-link active" : undefined
             }
           >
-            <CheckBoxIcon sx={{ margin: "0px 2px" }} />
-            Attendance
+            <CheckBoxIcon sx={{ marginRight: "5px" }} />
+            <span>Attendance</span>
           </NavLink>
         </li>
       </ul>
