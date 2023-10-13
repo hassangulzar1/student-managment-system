@@ -1,15 +1,19 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import SideBar from "../Layout/SideBar";
+import Header from "../Layout/Header";
 const Root = () => {
   return (
     <>
       <div style={{ display: "flex" }}>
         <SideBar />
 
-        <main style={{ width: "100%" }}>
-          <Outlet />
-        </main>
+        <div style={{ width: "100%" }}>
+          <Header />
+          <main>
+            <Outlet />
+          </main>
+        </div>
       </div>
     </>
   );
