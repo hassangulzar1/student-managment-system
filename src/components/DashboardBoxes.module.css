@@ -1,0 +1,28 @@
+.box {
+  width: 25vw;
+  margin: 0 0.5rem;
+  display: flex;
+  flex-direction: column;
+  font-family: "Montserrat", sans-serif;
+  border-radius: 10px;
+}
+.box h5 {
+  font-weight: bolder;
+  float: right;
+  margin-right: 0.8rem;
+  margin-bottom: 0.9rem;
+  font-size: 1.8rem;
+  font-weight: bolder;
+}
+.studentBox {
+  background-color: #f0f9ff;
+}
+.studentBox svg {
+  color: #74c1ed;
+}
+.coursesBox {
+  background-color: #fef6fb;
+}
+.coursesBox svg {
+  color: #ee95c5;
+}

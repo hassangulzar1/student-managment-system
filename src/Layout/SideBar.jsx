@@ -4,6 +4,7 @@ import ShowChartOutlinedIcon from "@mui/icons-material/ShowChartOutlined";
 import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import CheckBoxOutlinedIcon from "@mui/icons-material/CheckBoxOutlined";
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import classes from "./SideBar.module.css";
 
 const SideBar = () => {
@@ -100,6 +101,17 @@ const SideBar = () => {
           </NavLink>
         </li>
       </ul>
+      <button
+        style={{
+          border: "none",
+          backgroundColor: "#F2EAE1",
+          fontFamily: "Montserrat",
+          fontWeight: "bold",
+        }}
+      >
+        Logout
+        <LogoutOutlinedIcon sx={{ marginLeft: "10px" }} />
+      </button>
     </div>
   );
 };
