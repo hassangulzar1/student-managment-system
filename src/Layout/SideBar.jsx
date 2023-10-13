@@ -18,16 +18,26 @@ const SideBar = () => {
         backgroundColor: "#F2EAE1",
       }}
     >
-      <h5
-        style={{
-          fontFamily: "'Montserrat', sans-serif",
-          fontWeight: "bold",
-          cursor: "pointer",
-        }}
-        onClick={() => navigate("/")}
-      >
-        Manage Students
-      </h5>
+      <div className="d-flex">
+        <span
+          style={{
+            color: "#F8D442",
+            height: "23px",
+            borderLeft: "6px solid #F8D442",
+            margin: "0 3px",
+          }}
+        ></span>
+        <h5
+          style={{
+            fontFamily: "'Montserrat', sans-serif",
+            fontWeight: "bold",
+            cursor: "pointer",
+          }}
+          onClick={() => navigate("/")}
+        >
+          Manage Students
+        </h5>
+      </div>
       <div
         style={{
           display: "flex",
@@ -37,11 +47,12 @@ const SideBar = () => {
         }}
       >
         <img src="" style={{ borderRadius: "50%" }} alt="Avatar" />
-        <h5>Name of Admin</h5>
-        <h4>Admin</h4>
+        <h6>Name of Admin</h6>
+        <h5 style={{ color: "#FEAF00" }}>Admin</h5>
       </div>
+
       <ul
-        className={`nav nav-pills flex-column mb-auto mt-5 ${classes["slide-bar"]}`}
+        className={`nav nav-pills flex-column mb-auto mt-3 ${classes["slide-bar"]}`}
       >
         <li className="my-3 text-center">
           <NavLink
