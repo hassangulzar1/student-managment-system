@@ -15,15 +15,45 @@
   font-size: 1.8rem;
   font-weight: bolder;
 }
+/*! Student Card Styles  */
 .studentBox {
   background-color: #f0f9ff;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
-.studentBox svg {
-  color: #74c1ed;
+.studentBox:hover {
+  background: linear-gradient(
+    90deg,
+    rgba(240, 249, 255, 1) 0%,
+    rgba(169, 213, 243, 1) 100%
+  );
+  transition: 0.5s;
 }
+
+/*! Courses Card Styles  */
 .coursesBox {
   background-color: #fef6fb;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  cursor: pointer;
 }
-.coursesBox svg {
-  color: #ee95c5;
+.coursesBox:hover {
+  background: linear-gradient(
+    90deg,
+    rgba(254, 246, 251, 1) 0%,
+    rgba(251, 197, 226, 1) 100%
+  );
+}
+
+/*! Attendence Box Styles  */
+.attendeceBox {
+  background-color: #feaf00;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.attendeceBox:hover {
+  background: linear-gradient(
+    90deg,
+    rgba(254, 175, 0, 1) 0%,
+    rgb(253, 213, 120) 100%
+  );
 }
