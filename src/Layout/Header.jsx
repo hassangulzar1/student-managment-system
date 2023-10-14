@@ -5,7 +5,7 @@ import TextField from "@mui/material/TextField";
 const Header = () => {
   return (
     <header>
-      <div className="d-flex justify-content-between my-2 mx-2">
+      <div className="d-flex justify-content-between my-1 mx-2">
         <KeyboardBackspaceOutlinedIcon
           style={{ cursor: "pointer", margin: "auto 0" }}
         />

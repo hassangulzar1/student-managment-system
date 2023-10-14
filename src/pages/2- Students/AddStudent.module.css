@@ -1,10 +1,5 @@
 .mainDiv {
-  height: 15vh;
-  background: linear-gradient(
-    90deg,
-    rgba(124, 40, 116, 1) 0%,
-    rgba(74, 52, 70, 1) 100%
-  );
+  margin-top: 1rem;
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;

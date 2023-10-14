@@ -18,16 +18,7 @@ const UserTable = () => {
   const [dataState, setDataState] = useState([]);
   //! Changing user table based on their current state
   useEffect(() => {
-    const FilteredArray = ctx.studentsData.filter((e) => {
-      if (ctx.filterBy === "Name") {
-        return e.name.includes(ctx.filterInputState);
-      } else if (ctx.filterBy === "Email") {
-        return e.email.includes(ctx.filterInputState);
-      } else {
-        return e.gender.includes(ctx.filterInputState);
-      }
-    });
-    setDataState(FilteredArray);
+    setDataState(ctx.studentsData);
   }, [ctx.studentsData, ctx.filterInputState]);
 
   return (
@@ -45,7 +36,7 @@ const UserTable = () => {
               <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody sx={{ backgroundColor: "white" }}>
             {dataState.map((data, i) => (
               <TableRow
                 key={data.id}
