@@ -22,7 +22,7 @@ const UserTable = () => {
   }, [ctx.studentsData, ctx.filterInputState]);
 
   return (
-    <Container>
+    <Container sx={{ width: "100%" }}>
       <TableContainer>
         <Table sx={{ minWidth: 650 }}>
           <TableHead>
