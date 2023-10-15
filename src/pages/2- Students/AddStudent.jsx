@@ -1,7 +1,6 @@
 import React, { Fragment, useContext } from "react";
 import { Button } from "@mui/material";
 import classes from "./AddStudent.module.css";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import authContext from "../../Context/auth-context";
 const AddUser = () => {
   const ctx = useContext(authContext);

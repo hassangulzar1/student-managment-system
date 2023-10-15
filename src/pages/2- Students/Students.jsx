@@ -4,7 +4,7 @@ import Modal from "../../components/Modal";
 import StudentTable from "./StudentsTable";
 const Students = () => {
   return (
-    <div style={{ backgroundColor: "#f5f5f5", height: "90vh" }}>
+    <div style={{ backgroundColor: "#F8F8F8", height: "90vh" }}>
       <Modal />
       <AddStudent />
       <StudentTable />
