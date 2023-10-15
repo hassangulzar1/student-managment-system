@@ -1,11 +1,12 @@
-import React, { Fragment, useContext } from "react";
+import React, { Fragment } from "react";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import Typography from "@mui/material/Typography";
-import authContext from "../Context/auth-context";
 import ModalInputs from "./ModalInputs";
+import { useSelector, useDispatch } from "react-redux";
+import { modalActions } from "../store/modal-slice";
 
 const style = {
   position: "absolute",
@@ -20,17 +21,18 @@ const style = {
 };
 
 export default function TransitionsModal() {
-  const ctx = useContext(authContext);
-  const fadeOut = () => {
-    ctx.modalStateHandler(false);
-  };
+  const dispatch = useDispatch();
+  const modalState = useSelector((state) => state.modal);
 
+  const fadeOut = () => {
+    dispatch(modalActions.closeModal());
+  };
   return (
     <Fragment>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
-        open={ctx.modalState}
+        open={modalState.modalStatus}
         onClose={fadeOut}
         closeAfterTransition
         slots={{ backdrop: Backdrop }}
@@ -40,7 +42,7 @@ export default function TransitionsModal() {
           },
         }}
       >
-        <Fade in={ctx.modalState}>
+        <Fade in={modalState.modalStatus}>
           <Box sx={style}>
             <Typography
               id="transition-modal-title"
@@ -48,9 +50,10 @@ export default function TransitionsModal() {
               sx={{ fontWeight: "700" }}
               component="h2"
             >
-              {!ctx.courcesState ? "ADD NEW STUDENTS" : "ADD NEW COURCES"}
+              {modalState.modalFrom === "Student" && "ADD NEW STUDENTS"}
+              {modalState.modalFrom === "Course" && "ADD NEW COURSES"}
             </Typography>
-            <ModalInputs />
+            {/* <ModalInputs /> */}
           </Box>
         </Fade>
       </Modal>

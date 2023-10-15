@@ -1,18 +1,16 @@
-import React, { useContext } from "react";
-import authContext from "../../Context/auth-context";
+import React from "react";
 import DashboardBoxes from "../../components/DasboardBoxes";
 import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
 import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 const Dashboard = () => {
-  const ctx = useContext(authContext);
   return (
     <div className="d-flex justify-content-center">
       <DashboardBoxes
         className="studentBox"
         titleColor="black"
         title="Students"
-        count={ctx.studentsData.length}
+        count={12}
         Icon={
           <SchoolOutlinedIcon sx={{ fontSize: "3rem", color: "#74c1ed" }} />
         }
@@ -21,7 +19,7 @@ const Dashboard = () => {
         className="coursesBox"
         titleColor="black"
         title="Courses"
-        count={ctx.courcesData.length}
+        count={234}
         Icon={
           <BookmarkBorderOutlinedIcon
             sx={{ fontSize: "3rem", color: "#ee95c5" }}

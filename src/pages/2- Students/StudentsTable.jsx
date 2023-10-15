@@ -20,22 +20,22 @@ const removeEditStyle = {
   fontSize: "2rem",
   margin: "0 .5rem",
   "&:hover": {
-    color: "black",
+    color: "b",
   },
 };
 
 const UserTable = () => {
-  const ctx = useContext(authContext);
+  // const ctx = useContext(authContext);
 
-  const [dataState, setDataState] = useState([]);
+  // const [dataState, setDataState] = useState([]);
   //! Changing user table based on their current state
-  useEffect(() => {
-    setDataState(ctx.studentsData);
-  }, [ctx.studentsData, ctx.filterInputState]);
+  // useEffect(() => {
+  //   setDataState(ctx.studentsData);
+  // }, [ctx.studentsData, ctx.filterInputState]);
 
   return (
     <div style={{ margin: "0 .5rem" }}>
-      <TableContainer>
+      {/* <TableContainer>
         <Table>
           <TableHead>
             <TableRow>
@@ -86,7 +86,7 @@ const UserTable = () => {
             ))}
           </TableBody>
         </Table>
-      </TableContainer>
+      </TableContainer> */}
     </div>
   );
 };

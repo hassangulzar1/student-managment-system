@@ -1,10 +1,13 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Button } from "@mui/material";
-import authContext from "../Context/auth-context";
+import { useDispatch } from "react-redux";
+import { modalActions } from "../store/modal-slice";
+
 const StudentCoursesHead = (props) => {
-  const ctx = useContext(authContext);
+  const dispatch = useDispatch();
+
   const modalOpenerHandler = () => {
-    ctx.modalStateHandler(true, false);
+    dispatch(modalActions.openModal("Student"));
   };
 
   return (

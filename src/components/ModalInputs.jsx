@@ -11,12 +11,19 @@ import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import { doc, updateDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { modalActions } from "../store/modal-slice";
 
 const ModalInputs = () => {
+  const dispatch = useDispatch();
+  const modalFrom = useSelector((state) => state.modal.modalFrom);
+  const modalCloseHandler = () => {
+    dispatch(modalActions.closeModal());
+  };
+
   const ctx = useContext(authContext);
   //! Inputs States
   const [genderState, setGenderState] = useState();
-
   const {
     enteredValue: enteredName,
     isValid: nameIsValid,
@@ -57,82 +64,82 @@ const ModalInputs = () => {
   }
 
   //! Submit Handler
-  useEffect(() => {
-    if (ctx.editingMode) {
-      let particularElement = ctx.studentsData[ctx.idAndIndex.index];
+  //   useEffect(() => {
+  //     if (ctx.editingMode) {
+  //       let particularElement = ctx.studentsData[ctx.idAndIndex.index];
+  //
+  //       nameChangeHandler(particularElement.name);
+  //       emailChangeHandler(particularElement.email);
+  //       sallaryChangeHandler(particularElement.sallary);
+  //       DateChangeHandler(particularElement.date);
+  //       setGenderState(particularElement.gender);
+  //     }
+  //   }, []);
 
-      nameChangeHandler(particularElement.name);
-      emailChangeHandler(particularElement.email);
-      sallaryChangeHandler(particularElement.sallary);
-      DateChangeHandler(particularElement.date);
-      setGenderState(particularElement.gender);
-    }
-  }, []);
-
-  const AddUserSubmitHandler = async (event) => {
-    event.preventDefault();
-    ctx.setLoadingState(true);
-
-    if (ctx.editingMode) {
-      try {
-        await updateDoc(
-          doc(
-            ctx.db,
-            ctx.courcesState ? "students" : "courses",
-            ctx.idAndIndex.id
-          ),
-          !ctx.courcesState
-            ? {
-                name: enteredName,
-                email: enteredEmail,
-                gender: genderState,
-                sallary: enteredSallary,
-                date: enteredDate,
-              }
-            : {
-                courseTitle: enteredName,
-                courseDesc: enteredSallary,
-                courseCode: enteredDate,
-              }
-        );
-        ctx.setDataTracking((prevState) => !prevState);
-
-        ctx.modalStateHandler(false);
-        ctx.setLoadingState(false);
-        return toast.success(`Update data successfully!!`);
-      } catch (error) {
-        ctx.modalStateHandler(false);
-        ctx.setLoadingState(false);
-        return toast.error(`Something Went Wrong ❌!!`);
-      }
-    } else {
-      ctx.sendingDataHandler(
-        !ctx.courcesState
-          ? {
-              id: Math.random().toString(36).slice(2),
-              name: enteredName,
-              email: enteredEmail,
-              gender: genderState,
-              sallary: enteredSallary,
-              date: enteredDate,
-            }
-          : {
-              id: Math.random().toString(36).slice(2),
-              courseTitle: enteredName,
-              courseDesc: enteredSallary,
-              courseCode: enteredDate,
-            }
-      );
-      ctx.setLoadingState(false);
-
-      setGenderState();
-      resetName();
-      emailReset();
-      DateReset();
-      sallaryReset();
-      ctx.modalStateHandler(false);
-    }
-  };
+  //   const AddUserSubmitHandler = async (event) => {
+  //     event.preventDefault();
+  //     ctx.setLoadingState(true);
+  //
+  //     if (ctx.editingMode) {
+  //       try {
+  //         await updateDoc(
+  //           doc(
+  //             ctx.db,
+  //             ctx.courcesState ? "students" : "courses",
+  //             ctx.idAndIndex.id
+  //           ),
+  //           !ctx.courcesState
+  //             ? {
+  //                 name: enteredName,
+  //                 email: enteredEmail,
+  //                 gender: genderState,
+  //                 sallary: enteredSallary,
+  //                 date: enteredDate,
+  //               }
+  //             : {
+  //                 courseTitle: enteredName,
+  //                 courseDesc: enteredSallary,
+  //                 courseCode: enteredDate,
+  //               }
+  //         );
+  //         ctx.setDataTracking((prevState) => !prevState);
+  //
+  //         ctx.modalStateHandler(false);
+  //         ctx.setLoadingState(false);
+  //         return toast.success(`Update data successfully!!`);
+  //       } catch (error) {
+  //         ctx.modalStateHandler(false);
+  //         ctx.setLoadingState(false);
+  //         return toast.error(`Something Went Wrong ❌!!`);
+  //       }
+  //     } else {
+  //       ctx.sendingDataHandler(
+  //         !ctx.courcesState
+  //           ? {
+  //               id: Math.random().toString(36).slice(2),
+  //               name: enteredName,
+  //               email: enteredEmail,
+  //               gender: genderState,
+  //               sallary: enteredSallary,
+  //               date: enteredDate,
+  //             }
+  //           : {
+  //               id: Math.random().toString(36).slice(2),
+  //               courseTitle: enteredName,
+  //               courseDesc: enteredSallary,
+  //               courseCode: enteredDate,
+  //             }
+  //       );
+  //       ctx.setLoadingState(false);
+  //
+  //       setGenderState();
+  //       resetName();
+  //       emailReset();
+  //       DateReset();
+  //       sallaryReset();
+  //       ctx.modalStateHandler(false);
+  //     }
+  //   };
 
   return (
     <div
@@ -143,7 +150,7 @@ const ModalInputs = () => {
         flexDirection: "column",
       }}
     >
-      {!ctx.courcesState && (
+      {modalFrom === "Student" && (
         <form action="" onSubmit={AddUserSubmitHandler}>
           <TextField
             fullWidth
@@ -245,7 +252,7 @@ const ModalInputs = () => {
             <Button
               variant="outlined"
               color="error"
-              onClick={() => ctx.modalStateHandler(false)}
+              onClick={() => modalCloseHandler}
             >
               Close
             </Button>
@@ -253,7 +260,7 @@ const ModalInputs = () => {
         </form>
       )}
 
-      {ctx.courcesState && (
+      {modalFrom === "Course" && (
         <form action="" onSubmit={AddUserSubmitHandler}>
           <TextField
             fullWidth
@@ -315,7 +322,7 @@ const ModalInputs = () => {
             <Button
               variant="outlined"
               color="error"
-              onClick={() => ctx.modalStateHandler(false)}
+              onClick={modalCloseHandler}
             >
               Close
             </Button>
