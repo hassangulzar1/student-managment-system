@@ -1,6 +1,4 @@
 .mainDiv {
-  margin-top: 1rem;
   display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
+  justify-content: space-between;
 }

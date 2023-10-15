@@ -9,7 +9,6 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import Button from "@mui/material/Button";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import { Container } from "@mui/material";
 import authContext from "../../Context/auth-context";
 
 const UserTable = () => {
@@ -22,9 +21,9 @@ const UserTable = () => {
   }, [ctx.studentsData, ctx.filterInputState]);
 
   return (
-    <Container sx={{ width: "100%" }}>
+    <div style={{ margin: "0 .5rem" }}>
       <TableContainer>
-        <Table sx={{ minWidth: 650 }}>
+        <Table>
           <TableHead>
             <TableRow>
               <TableCell>No.</TableCell>
@@ -40,7 +39,9 @@ const UserTable = () => {
             {dataState.map((data, i) => (
               <TableRow
                 key={data.id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                sx={{
+                  "&:last-child td, &:last-child th": { border: 0 },
+                }}
               >
                 <TableCell component="th" scope="row">
                   {i + 1}
@@ -75,7 +76,7 @@ const UserTable = () => {
           </TableBody>
         </Table>
       </TableContainer>
-    </Container>
+    </div>
   );
 };
 
