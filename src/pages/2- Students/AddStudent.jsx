@@ -42,7 +42,7 @@ const AddUser = () => {
           ADD NEW STUDENTS
         </Button>
       </div>
-      <hr style={{ margin: ".9rem .9rem", color: "#E5E5E5" }} />
+      <hr style={{ margin: ".9rem .9rem", color: "#ACACAC" }} />
     </Fragment>
   );
 };

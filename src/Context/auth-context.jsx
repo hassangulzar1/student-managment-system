@@ -48,13 +48,6 @@ export const AuthContextProvider = (props) => {
       return toast.error(err.message);
     }
   };
-  //! Filtering States
-  const [filterBy, setFilter] = useState("Name");
-  const [filterInputState, setFilterInputState] = useState("");
-
-  const handleChange = (event) => {
-    setFilter(event.target.value);
-  };
 
   // !Loading State for adding User
   const [loadingState, setLoadingState] = useState(false);
@@ -145,12 +138,6 @@ export const AuthContextProvider = (props) => {
         db,
         courcesData,
         courcesState,
-        //! Filtering States
-        filterBy,
-        setFilter,
-        filterInputState,
-        setFilterInputState,
-        handleChange,
       }}
     >
       {props.children}
