@@ -68,13 +68,13 @@ const UserTable = () => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell sx={tableHead}>No.</TableCell>
+              <TableCell sx={tableHead}></TableCell>
               <TableCell sx={tableHead}>Name</TableCell>
               <TableCell sx={tableHead}>Email</TableCell>
               <TableCell sx={tableHead}>Phone</TableCell>
               <TableCell sx={tableHead}>Date of Admission</TableCell>
               <TableCell sx={tableHead}>Gender</TableCell>
-              <TableCell sx={tableHead}>Actions</TableCell>
+              <TableCell sx={tableHead}></TableCell>
             </TableRow>
           </TableHead>
           <TableBody sx={{ backgroundColor: "white" }}>
@@ -116,7 +116,7 @@ const UserTable = () => {
               ))}
           </TableBody>
         </Table>
-        {!selectorData && <p style={fallbackText}>Data Fetching Loading...</p>}
+        {!selectorData && <p style={fallbackText}>Data Fetching...</p>}
       </TableContainer>
     </div>
   );
