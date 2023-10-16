@@ -7,7 +7,7 @@ const StudentCoursesHead = (props) => {
   const dispatch = useDispatch();
 
   const modalOpenerHandler = () => {
-    dispatch(modalActions.openModal("Student"));
+    dispatch(modalActions.openModal(props.modal));
   };
 
   return (

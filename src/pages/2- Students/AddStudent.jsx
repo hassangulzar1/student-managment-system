@@ -4,7 +4,11 @@ const AddUser = () => {
   return (
     //! Add Button
     <Fragment>
-      <StudentCoursesHead title="Students List" buttonName="ADD NEW STUDENTS" />
+      <StudentCoursesHead
+        title="Students List"
+        modal="Student"
+        buttonName="ADD NEW STUDENTS"
+      />
     </Fragment>
   );
 };

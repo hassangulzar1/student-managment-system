@@ -85,7 +85,6 @@ const ModalInputs = () => {
 
   //! Student Data Submit Handler
   const options = { year: "numeric", month: "long", day: "numeric" };
-
   const studentSubmitHandler = async (e) => {
     e.preventDefault();
     dispatch(studentDataActions.startloading());
@@ -109,6 +108,47 @@ const ModalInputs = () => {
     } else {
       try {
         await updateDoc(doc(db, "students", id), {
+          id: id,
+          name: enteredName,
+          email: enteredEmail,
+          gender: genderState,
+          phone: enteredSallary,
+          date: new Date(enteredDate).toLocaleDateString("en-US", options),
+        });
+        dispatch(studentDataActions.dataChanging());
+        dispatch(modalActions.closeModal());
+
+        toast.success("student Update Successfully");
+      } catch (error) {
+        console.log(error);
+        toast.error("Something went wrong " + error.message);
+      }
+    }
+    dispatch(studentDataActions.closeLoading());
+  };
+
+  //! Course Data Submit Handler
+  const courseSubmitHandler = async (e) => {
+    e.preventDefault();
+    dispatch(studentDataActions.startloading());
+    if (!isEditingMode) {
+      let id = Math.random().toString(36).slice(2);
+      try {
+        await setDoc(doc(db, "courses", id), {
+          id: id,
+          title: enteredName,
+          code: enteredDate,
+          desc: enteredSallary,
+        });
+        dispatch(studentDataActions.dataChanging());
+        dispatch(modalActions.closeModal());
+        toast.success("New Course Added successfully");
+      } catch (error) {
+        toast.error("Something went wrong" + error.message);
+      }
+    } else {
+      try {
+        await updateDoc(doc(db, "courses", id), {
           id: id,
           name: enteredName,
           email: enteredEmail,
@@ -249,7 +289,7 @@ const ModalInputs = () => {
       )}
 
       {modalFrom === "Course" && (
-        <form action="" onSubmit={AddUserSubmitHandler}>
+        <form action="" onSubmit={courseSubmitHandler}>
           <TextField
             fullWidth
             sx={{ marginY: 1 }}
@@ -297,15 +337,12 @@ const ModalInputs = () => {
           >
             <Button
               variant="contained"
-              color={ctx.editingMode ? "info" : "success"}
+              color={isEditingMode ? "info" : "success"}
               type="submit"
               disabled={!formIsValid}
             >
-              {ctx.editingMode
-                ? ctx.loadingState
-                  ? "Updating..."
-                  : "Update"
-                : "ADD Course"}
+              {isEditingMode ? (isLoading ? "Updating..." : "Update") : ""}
+              {!isEditingMode ? (isLoading ? "Adding..." : "ADD Course") : ""}
             </Button>
             <Button
               variant="outlined"
