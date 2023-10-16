@@ -19,6 +19,10 @@ const tableHead = {
   fontFamily: "Montserrat",
   fontWeight: "bold",
 };
+const tableCell = {
+  fontFamily: "Montserrat",
+  fontWeight: "600",
+};
 const removeEditStyle = {
   color: "#FEAF00",
   cursor: "pointer",
@@ -90,16 +94,14 @@ const UserTable = () => {
                     },
                   }}
                 >
-                  <TableCell component="th" scope="row">
+                  <TableCell component="th" scope="row" sx={tableCell}>
                     {i + 1}
                   </TableCell>
-                  <TableCell component="th" scope="row">
-                    {data.name}
-                  </TableCell>
-                  <TableCell>{data.email}</TableCell>
-                  <TableCell>{data.phone}</TableCell>
-                  <TableCell>{data.date}</TableCell>
-                  <TableCell>{data.gender}</TableCell>
+                  <TableCell sx={tableCell}>{data.name}</TableCell>
+                  <TableCell sx={tableCell}>{data.email}</TableCell>
+                  <TableCell sx={tableCell}>{data.phone}</TableCell>
+                  <TableCell sx={tableCell}>{data.date}</TableCell>
+                  <TableCell sx={tableCell}>{data.gender}</TableCell>
                   <TableCell>
                     <EditOutlinedIcon
                       sx={removeEditStyle}
@@ -117,6 +119,9 @@ const UserTable = () => {
           </TableBody>
         </Table>
         {isLoading && <p style={fallbackText}>Data Fetching...</p>}
+        {!isLoading && selectorData.length === 0 && (
+          <p style={fallbackText}>No Data Found!</p>
+        )}
       </TableContainer>
     </div>
   );

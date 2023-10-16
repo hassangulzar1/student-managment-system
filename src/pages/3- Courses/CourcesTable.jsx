@@ -11,14 +11,21 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { db } from "../../config/firebase-config";
+import { deleteDoc, doc } from "firebase/firestore";
+import { studentDataActions } from "../../store/studentData-slice";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
+    backgroundColor: "black",
+    color: "white",
+    borderColor: "#F8F8F8",
+    fontFamily: "Montserrat",
+    fontWeight: "600",
   },
   [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
+    fontFamily: "Montserrat",
+    fontWeight: "600",
   },
 }));
 
@@ -45,7 +52,7 @@ const fallbackText = {
   color: "#ACACAC",
   textAlign: "center",
   fontSize: "1.5rem",
-  marginTop: "4rem",
+  marginTop: "2rem",
 };
 
 const UserTable = () => {
@@ -81,11 +88,11 @@ const UserTable = () => {
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>No</StyledTableCell>
+            <StyledTableCell></StyledTableCell>
             <StyledTableCell align="right">Course Title</StyledTableCell>
             <StyledTableCell align="right">Course Code</StyledTableCell>
             <StyledTableCell align="right">Course Description</StyledTableCell>
-            <StyledTableCell align="right">Actions</StyledTableCell>
+            <StyledTableCell align="right"></StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -115,6 +122,9 @@ const UserTable = () => {
         </TableBody>
       </Table>
       {isLoading && <p style={fallbackText}>Data Fetching...</p>}
+      {!isLoading && selectorData.length === 0 && (
+        <p style={fallbackText}>No Data Found!</p>
+      )}
     </TableContainer>
   );
 };
