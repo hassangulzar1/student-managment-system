@@ -213,7 +213,7 @@ const ModalInputs = () => {
           <TextField
             fullWidth
             sx={{ marginY: 1 }}
-            type="number"
+            type="phone"
             label="Phone No."
             name="phone"
             value={enteredSallary}
