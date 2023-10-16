@@ -10,6 +10,9 @@ import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined
 import { useDispatch, useSelector } from "react-redux";
 import { modalActions } from "../../store/modal-slice";
 import { studentDataActions } from "../../store/studentData-slice";
+import { toast } from "react-toastify";
+import { db } from "../../config/firebase-config";
+import { deleteDoc, doc } from "firebase/firestore";
 
 const tableHead = {
   color: "#ACACAC",
@@ -42,6 +45,21 @@ const UserTable = () => {
   const editingModeHandler = (id) => {
     dispatch(modalActions.editModal("Student"));
     dispatch(studentDataActions.editingData(id));
+  };
+  //! deleting user
+  const deleteListHandle = async (Id) => {
+    const confirm = window.confirm("Are you sure you want to delete the User?");
+    if (confirm) {
+      try {
+        await deleteDoc(doc(db, "students", Id));
+        dispatch(studentDataActions.dataChanging());
+        toast.success(`Student Removed Successfully`);
+      } catch (error) {
+        toast.error(err.message);
+      }
+    } else {
+      return;
+    }
   };
 
   return (
@@ -90,7 +108,7 @@ const UserTable = () => {
                     <DeleteOutlineOutlinedIcon
                       sx={removeEditStyle}
                       onClick={() => {
-                        ctx.deleteListHandler(data.id);
+                        deleteListHandle(data.id);
                       }}
                     />
                   </TableCell>

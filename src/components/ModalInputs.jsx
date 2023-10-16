@@ -66,102 +66,6 @@ const ModalInputs = () => {
   }
 
   //! Submit Handler
-  //   useEffect(() => {
-  //     if (ctx.editingMode) {
-  //       let particularElement = ctx.studentsData[ctx.idAndIndex.index];
-  //
-  //       nameChangeHandler(particularElement.name);
-  //       emailChangeHandler(particularElement.email);
-  //       sallaryChangeHandler(particularElement.sallary);
-  //       DateChangeHandler(particularElement.date);
-  //       setGenderState(particularElement.gender);
-  //     }
-  //   }, []);
-
-  //   const AddUserSubmitHandler = async (event) => {
-  //     event.preventDefault();
-  //     ctx.setLoadingState(true);
-  //
-  //     if (ctx.editingMode) {
-  //       try {
-  //         await updateDoc(
-  //           doc(
-  //             ctx.db,
-  //             ctx.courcesState ? "students" : "courses",
-  //             ctx.idAndIndex.id
-  //           ),
-  //           !ctx.courcesState
-  //             ? {
-  //                 name: enteredName,
-  //                 email: enteredEmail,
-  //                 gender: genderState,
-  //                 sallary: enteredSallary,
-  //                 date: enteredDate,
-  //               }
-  //             : {
-  //                 courseTitle: enteredName,
-  //                 courseDesc: enteredSallary,
-  //                 courseCode: enteredDate,
-  //               }
-  //         );
-  //         ctx.setDataTracking((prevState) => !prevState);
-  //
-  //         ctx.modalStateHandler(false);
-  //         ctx.setLoadingState(false);
-  //         return toast.success(`Update data successfully!!`);
-  //       } catch (error) {
-  //         ctx.modalStateHandler(false);
-  //         ctx.setLoadingState(false);
-  //         return toast.error(`Something Went Wrong ❌!!`);
-  //       }
-  //     } else {
-  //       ctx.sendingDataHandler(
-  //         !ctx.courcesState
-  //           ? {
-  //               id: Math.random().toString(36).slice(2),
-  //               name: enteredName,
-  //               email: enteredEmail,
-  //               gender: genderState,
-  //               sallary: enteredSallary,
-  //               date: enteredDate,
-  //             }
-  //           : {
-  //               id: Math.random().toString(36).slice(2),
-  //               courseTitle: enteredName,
-  //               courseDesc: enteredSallary,
-  //               courseCode: enteredDate,
-  //             }
-  //       );
-  //       ctx.setLoadingState(false);
-  //
-  //       setGenderState();
-  //       resetName();
-  //       emailReset();
-  //       DateReset();
-  //       sallaryReset();
-  //       ctx.modalStateHandler(false);
-  //     }
-  //   };
-  // const options = {
-  //   year: "numeric",
-  //   month: "long",
-  //   day: "numeric",
-  // };
-
-  // const studentDataSubmitHandler = (e) => {
-  //   e.preventDefault();
-  //   dispatch(
-  //     studentDataActions.addingData({
-  //       id: Math.random().toString(36).slice(2),
-  //       enteredName,
-  //       enteredEmail,
-  //       enteredSallary,
-  //       enteredDate,
-  //       genderState,
-  //     })
-  //   );
-  // };
-
   const isEditingMode = useSelector((state) => state.modal.isEditing);
   const isLoading = useSelector((state) => state.studentsData.loadingState);
   const dataArray = useSelector((state) => state.studentsData.studentsData);
@@ -179,7 +83,7 @@ const ModalInputs = () => {
     }
   }, [isEditingMode]);
 
-  //! Submit Data Handler
+  //! Student Data Submit Handler
   const options = { year: "numeric", month: "long", day: "numeric" };
 
   const studentSubmitHandler = async (e) => {
@@ -215,7 +119,7 @@ const ModalInputs = () => {
         dispatch(studentDataActions.dataChanging());
         dispatch(modalActions.closeModal());
 
-        toast.success("Update student Data Successfully");
+        toast.success("student Update Successfully");
       } catch (error) {
         console.log(error);
         toast.error("Something went wrong " + error.message);
