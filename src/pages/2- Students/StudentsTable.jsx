@@ -9,6 +9,7 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { useDispatch, useSelector } from "react-redux";
 import { modalActions } from "../../store/modal-slice";
+import { studentDataActions } from "../../store/studentData-slice";
 
 const tableHead = {
   color: "#ACACAC",
@@ -33,14 +34,16 @@ const fallbackText = {
 };
 
 const UserTable = () => {
+  const dispatch = useDispatch();
   //! Latest States Snaps
   const selectorData = useSelector((state) => state.studentsData.studentsData);
 
-  const dispatch = useDispatch();
-
+  //! Editing Handler
   const editingModeHandler = (id) => {
     dispatch(modalActions.editModal("Student"));
+    dispatch(studentDataActions.editingData(id));
   };
+
   return (
     <div style={{ margin: "0 .5rem" }}>
       <TableContainer>

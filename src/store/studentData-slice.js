@@ -3,6 +3,7 @@ const initialState = {
   studentsData: null,
   dataChanging: false,
   loadingState: false,
+  id: "",
 };
 
 const studentDataSlice = createSlice({
@@ -14,6 +15,9 @@ const studentDataSlice = createSlice({
     },
     dataChanging(state) {
       state.dataChanging = !state.dataChanging;
+    },
+    editingData(state, action) {
+      state.id = action.payload;
     },
     startloading(state) {
       state.loadingState = true;

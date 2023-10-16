@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { TextField } from "@mui/material";
 import useInput from "../hooks/use-inputs";
 import Button from "@mui/material/Button";
@@ -11,8 +11,7 @@ import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import { useDispatch, useSelector } from "react-redux";
 import { modalActions } from "../store/modal-slice";
-import { Form } from "react-router-dom";
-import { setDoc, doc } from "firebase/firestore";
+import { setDoc, doc, updateDoc } from "firebase/firestore";
 import { db } from "../config/firebase-config";
 import { toast } from "react-toastify";
 import { studentDataActions } from "../store/studentData-slice";
@@ -165,28 +164,64 @@ const ModalInputs = () => {
 
   const isEditingMode = useSelector((state) => state.modal.isEditing);
   const isLoading = useSelector((state) => state.studentsData.loadingState);
+  const dataArray = useSelector((state) => state.studentsData.studentsData);
+  const id = useSelector((state) => state.studentsData.id);
+
+  //! Updating inputs
+  useEffect(() => {
+    if (isEditingMode) {
+      let particularElement = dataArray.filter((e) => e.id === id);
+      nameChangeHandler(particularElement[0].name);
+      emailChangeHandler(particularElement[0].email);
+      sallaryChangeHandler(particularElement[0].phone);
+      DateChangeHandler(new Date(particularElement[0].date).toDateString());
+      setGenderState(particularElement[0].gender);
+    }
+  }, [isEditingMode]);
+
+  //! Submit Data Handler
+  const options = { year: "numeric", month: "long", day: "numeric" };
 
   const studentSubmitHandler = async (e) => {
     e.preventDefault();
     dispatch(studentDataActions.startloading());
-    let id = Math.random().toString(36).slice(2);
-    const options = { year: "numeric", month: "long", day: "numeric" };
-    try {
-      await setDoc(doc(db, "students", id), {
-        id: id,
-        name: enteredName,
-        email: enteredEmail,
-        gender: genderState,
-        phone: enteredSallary,
-        date: new Date(enteredDate).toLocaleDateString("en-US", options),
-      });
-      dispatch(studentDataActions.dataChanging());
-      dispatch(modalActions.closeModal());
-      dispatch(studentDataActions.closeLoading());
-      toast.success("New student Added successfully");
-    } catch (error) {
-      toast.success("Something went wrong" + error.message);
+    if (!isEditingMode) {
+      let id = Math.random().toString(36).slice(2);
+      try {
+        await setDoc(doc(db, "students", id), {
+          id: id,
+          name: enteredName,
+          email: enteredEmail,
+          gender: genderState,
+          phone: enteredSallary,
+          date: new Date(enteredDate).toLocaleDateString("en-US", options),
+        });
+        dispatch(studentDataActions.dataChanging());
+        dispatch(modalActions.closeModal());
+        toast.success("New student Added successfully");
+      } catch (error) {
+        toast.error("Something went wrong" + error.message);
+      }
+    } else {
+      try {
+        await updateDoc(doc(db, "students", id), {
+          id: id,
+          name: enteredName,
+          email: enteredEmail,
+          gender: genderState,
+          phone: enteredSallary,
+          date: new Date(enteredDate).toLocaleDateString("en-US", options),
+        });
+        dispatch(studentDataActions.dataChanging());
+        dispatch(modalActions.closeModal());
+
+        toast.success("Update student Data Successfully");
+      } catch (error) {
+        console.log(error);
+        toast.error("Something went wrong " + error.message);
+      }
     }
+    dispatch(studentDataActions.closeLoading());
   };
 
   return (
