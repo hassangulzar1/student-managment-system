@@ -2,6 +2,7 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import SideBar from "../Layout/SideBar";
 import Header from "../Layout/Header";
+
 const Root = () => {
   return (
     <>
@@ -10,8 +11,10 @@ const Root = () => {
 
         <div style={{ width: "100%" }}>
           <Header />
-          <main>
-            <Outlet />
+          <main style={{ display: "flex", justifyContent: "end" }}>
+            <div style={{ width: "81%" }}>
+              <Outlet />
+            </div>
           </main>
         </div>
       </div>

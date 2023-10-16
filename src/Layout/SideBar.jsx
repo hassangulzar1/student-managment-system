@@ -12,9 +12,9 @@ const SideBar = () => {
 
   return (
     <div
-      className={`d-flex flex-column flex-shrink-0 p-3`}
+      className={`d-flex flex-column flex-shrink-0 p-3 fixed-top`}
       style={{
-        width: "14rem",
+        width: "19%",
         height: "100vh",
         backgroundColor: "#F2EAE1",
       }}

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { TextField } from "@mui/material";
 import useInput from "../hooks/use-inputs";
 import Button from "@mui/material/Button";
@@ -9,10 +9,13 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
-import { doc, updateDoc } from "firebase/firestore";
-import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { modalActions } from "../store/modal-slice";
+import { Form } from "react-router-dom";
+import { setDoc, doc } from "firebase/firestore";
+import { db } from "../config/firebase-config";
+import { toast } from "react-toastify";
+import { studentDataActions } from "../store/studentData-slice";
 
 const ModalInputs = () => {
   const dispatch = useDispatch();
@@ -140,6 +143,46 @@ const ModalInputs = () => {
   //       ctx.modalStateHandler(false);
   //     }
   //   };
+  // const options = {
+  //   year: "numeric",
+  //   month: "long",
+  //   day: "numeric",
+  // };
+
+  // const studentDataSubmitHandler = (e) => {
+  //   e.preventDefault();
+  //   dispatch(
+  //     studentDataActions.addingData({
+  //       id: Math.random().toString(36).slice(2),
+  //       enteredName,
+  //       enteredEmail,
+  //       enteredSallary,
+  //       enteredDate,
+  //       genderState,
+  //     })
+  //   );
+  // };
+
+  const formSubmitHandler = async (e) => {
+    e.preventDefault();
+    let id = Math.random().toString(36).slice(2);
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    try {
+      await setDoc(doc(db, "students", id), {
+        id: id,
+        name: enteredName,
+        email: enteredEmail,
+        gender: genderState,
+        phone: enteredSallary,
+        date: new Date(enteredDate).toLocaleDateString("en-US", options),
+      });
+      dispatch(studentDataActions.dataChanging());
+      dispatch(modalActions.closeModal());
+      toast.success("New student Added successfully");
+    } catch (error) {
+      toast.success("Something went wrong" + error.message);
+    }
+  };
 
   return (
     <div
@@ -151,11 +194,12 @@ const ModalInputs = () => {
       }}
     >
       {modalFrom === "Student" && (
-        <form action="" onSubmit={AddUserSubmitHandler}>
+        <form onSubmit={formSubmitHandler}>
           <TextField
             fullWidth
             sx={{ marginY: 1 }}
             type="text"
+            name="name"
             label="User Name"
             value={enteredName}
             onChange={(e) => nameChangeHandler(e.target.value)}
@@ -170,6 +214,7 @@ const ModalInputs = () => {
             sx={{ marginY: 1 }}
             type="email"
             label="Email"
+            name="email"
             onChange={(e) => emailChangeHandler(e.target.value)}
             onBlur={emailBlurHandler}
             error={emailInputIsValid}
@@ -183,6 +228,7 @@ const ModalInputs = () => {
             sx={{ marginY: 1 }}
             type="number"
             label="Phone No."
+            name="phone"
             value={enteredSallary}
             onChange={(e) => sallaryChangeHandler(e.target.value)}
             onBlur={sallaryBlurHandler}
@@ -195,6 +241,7 @@ const ModalInputs = () => {
             fullWidth
             sx={{ marginY: 1 }}
             type="date"
+            name="date"
             value={enteredDate}
             onChange={(e) => DateChangeHandler(e.target.value)}
             onBlur={DateBlurHandler}
@@ -209,7 +256,7 @@ const ModalInputs = () => {
               sx={{ display: "flex", justifyContent: "center" }}
               row
               aria-labelledby="demo-row-radio-buttons-group-label"
-              name="row-radio-buttons-group"
+              name="radio"
               onChange={(e) => setGenderState(e.target.value)}
             >
               <FormControlLabel
@@ -252,7 +299,7 @@ const ModalInputs = () => {
             <Button
               variant="outlined"
               color="error"
-              onClick={() => modalCloseHandler}
+              onClick={modalCloseHandler}
             >
               Close
             </Button>
