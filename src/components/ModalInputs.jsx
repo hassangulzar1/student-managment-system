@@ -184,11 +184,10 @@ const ModalInputs = () => {
         <form onSubmit={studentSubmitHandler}>
           <TextField
             fullWidth
+            color="warning"
+            autoFocus
             sx={{
               marginY: 1,
-              "&.Mui-focused fieldset": {
-                borderColor: "#FEAF00",
-              },
             }}
             type="text"
             name="name"
@@ -204,6 +203,7 @@ const ModalInputs = () => {
           <TextField
             fullWidth
             sx={{ marginY: 1 }}
+            color="warning"
             type="email"
             label="Email"
             name="email"
@@ -218,6 +218,7 @@ const ModalInputs = () => {
           <TextField
             fullWidth
             sx={{ marginY: 1 }}
+            color="warning"
             type="phone"
             label="Phone No."
             name="phone"
@@ -232,6 +233,7 @@ const ModalInputs = () => {
           <TextField
             fullWidth
             sx={{ marginY: 1 }}
+            color="warning"
             type="date"
             name="date"
             value={enteredDate}
@@ -314,8 +316,10 @@ const ModalInputs = () => {
         <form action="" onSubmit={courseSubmitHandler}>
           <TextField
             fullWidth
+            autoFocus
             sx={{ marginY: 1 }}
             type="text"
+            color="warning"
             label="Course Title"
             value={enteredName}
             onChange={(e) => nameChangeHandler(e.target.value)}
@@ -330,6 +334,7 @@ const ModalInputs = () => {
             sx={{ marginY: 1 }}
             type="text"
             label="Course Code"
+            color="warning"
             value={enteredDate}
             onChange={(e) => DateChangeHandler(e.target.value)}
             onBlur={DateBlurHandler}
@@ -344,6 +349,7 @@ const ModalInputs = () => {
             type="text"
             label="Description"
             value={enteredSallary}
+            color="warning"
             onChange={(e) => sallaryChangeHandler(e.target.value)}
             onBlur={sallaryBlurHandler}
             error={sallaryInputIsValid}
