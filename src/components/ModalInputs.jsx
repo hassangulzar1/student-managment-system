@@ -184,7 +184,12 @@ const ModalInputs = () => {
         <form onSubmit={studentSubmitHandler}>
           <TextField
             fullWidth
-            sx={{ marginY: 1 }}
+            sx={{
+              marginY: 1,
+              "&.Mui-focused fieldset": {
+                borderColor: "#FEAF00",
+              },
+            }}
             type="text"
             name="name"
             label="User Name"
@@ -273,7 +278,20 @@ const ModalInputs = () => {
           >
             <Button
               variant="contained"
-              color={isEditingMode ? "info" : "success"}
+              sx={{
+                color: "black",
+                marginTop: ".4rem",
+                fontWeight: "bold",
+                paddingX: "1rem",
+                fontFamily: "Montserrat",
+                background: isEditingMode ? "success" : "#FEAF00",
+                color: "#FFFFFF",
+                marginRight: 4,
+                "&:hover": {
+                  background:
+                    "linear-gradient(90deg, rgba(254,175,0,1) 0%, rgba(252,220,148,1) 100%)",
+                },
+              }}
               type="submit"
               disabled={!formIsValid}
             >
@@ -281,6 +299,7 @@ const ModalInputs = () => {
               {!isEditingMode ? (isLoading ? "Adding..." : "ADD User") : ""}
             </Button>
             <Button
+              sx={{ fontFamily: "Montserrat", fontWeight: "bold" }}
               variant="outlined"
               color="error"
               onClick={modalCloseHandler}

@@ -17,7 +17,8 @@ const style = {
   bgcolor: "background.paper",
   borderRadius: "10px",
   boxShadow: 24,
-  p: 4,
+  textAlign: "center",
+  paddingBottom: "20px",
 };
 
 export default function TransitionsModal() {
@@ -47,7 +48,14 @@ export default function TransitionsModal() {
             <Typography
               id="transition-modal-title"
               variant="h5"
-              sx={{ fontWeight: "700" }}
+              sx={{
+                fontWeight: "bolder",
+                fontFamily: "Montserrat",
+                backgroundColor: "#FEAF00",
+                color: "#FFFFFF",
+                marginBottom: "30px",
+                paddingY: 2,
+              }}
               component="h2"
             >
               {modalState.modalFrom === "Student" && "ADD NEW STUDENTS"}
