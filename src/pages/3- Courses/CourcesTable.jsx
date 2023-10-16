@@ -53,7 +53,7 @@ const UserTable = () => {
   const dispatch = useDispatch();
   //! Latest States Snaps
   const selectorData = useSelector((state) => state.studentsData.studentsData);
-  console.log(selectorData);
+  const isLoading = useSelector((state) => state.studentsData.loadingState);
   //! Editing Handler
   const editingModeHandler = (id) => {
     dispatch(modalActions.editModal("Course"));
@@ -89,7 +89,7 @@ const UserTable = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {selectorData &&
+          {!isLoading &&
             selectorData.map((data, i) => (
               <StyledTableRow key={i + 1}>
                 <StyledTableCell component="th" scope="row">
@@ -114,7 +114,7 @@ const UserTable = () => {
             ))}
         </TableBody>
       </Table>
-      {!selectorData && <p style={fallbackText}>Data Fetching...</p>}
+      {isLoading && <p style={fallbackText}>Data Fetching...</p>}
     </TableContainer>
   );
 };

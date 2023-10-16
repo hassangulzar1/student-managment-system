@@ -14,6 +14,7 @@ const Students = () => {
   const dataTracking = useSelector((state) => state.studentsData.dataChanging);
   useEffect(() => {
     const dataFetching = async () => {
+      dispatch(studentDataActions.startloading());
       let array = [];
       try {
         const data = await getDocs(collection(db, "students"));
@@ -22,8 +23,9 @@ const Students = () => {
         });
         dispatch(studentDataActions.addingData(array));
       } catch (error) {
-        return toast.error("data fetching error: " + error.message);
+        toast.error("data fetching error: " + error.message);
       }
+      dispatch(studentDataActions.closeLoading());
     };
     dataFetching();
   }, [dataTracking]);

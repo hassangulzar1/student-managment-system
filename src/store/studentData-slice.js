@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
-  studentsData: null,
+  studentsData: [],
   dataChanging: false,
   loadingState: false,
   id: "",

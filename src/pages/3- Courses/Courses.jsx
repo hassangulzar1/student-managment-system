@@ -13,6 +13,7 @@ const Courses = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     const dataFetching = async () => {
+      dispatch(studentDataActions.startloading());
       let array = [];
       try {
         const data = await getDocs(collection(db, "courses"));
@@ -24,6 +25,7 @@ const Courses = () => {
       } catch (error) {
         return toast.error("data fetching error: " + error.message);
       }
+      dispatch(studentDataActions.closeLoading());
     };
     dataFetching();
   }, [dataTracking]);

@@ -40,7 +40,7 @@ const UserTable = () => {
   const dispatch = useDispatch();
   //! Latest States Snaps
   const selectorData = useSelector((state) => state.studentsData.studentsData);
-
+  const isLoading = useSelector((state) => state.studentsData.loadingState);
   //! Editing Handler
   const editingModeHandler = (id) => {
     dispatch(modalActions.editModal("Student"));
@@ -78,7 +78,7 @@ const UserTable = () => {
             </TableRow>
           </TableHead>
           <TableBody sx={{ backgroundColor: "white" }}>
-            {selectorData &&
+            {!isLoading &&
               selectorData.map((data, i) => (
                 <TableRow
                   key={data.id}
@@ -116,7 +116,7 @@ const UserTable = () => {
               ))}
           </TableBody>
         </Table>
-        {!selectorData && <p style={fallbackText}>Data Fetching...</p>}
+        {isLoading && <p style={fallbackText}>Data Fetching...</p>}
       </TableContainer>
     </div>
   );
