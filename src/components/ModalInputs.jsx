@@ -70,16 +70,22 @@ const ModalInputs = () => {
   const isLoading = useSelector((state) => state.studentsData.loadingState);
   const dataArray = useSelector((state) => state.studentsData.studentsData);
   const id = useSelector((state) => state.studentsData.id);
+  const From = useSelector((state) => state.modal.modalFrom);
 
   //! Updating inputs
   useEffect(() => {
-    if (isEditingMode) {
+    if (isEditingMode && From === "Student") {
       let particularElement = dataArray.filter((e) => e.id === id);
       nameChangeHandler(particularElement[0].name);
       emailChangeHandler(particularElement[0].email);
       sallaryChangeHandler(particularElement[0].phone);
       DateChangeHandler(new Date(particularElement[0].date).toDateString());
       setGenderState(particularElement[0].gender);
+    } else if (isEditingMode && From === "Course") {
+      let particularElement = dataArray.filter((e) => e.id === id);
+      nameChangeHandler(particularElement[0].title);
+      sallaryChangeHandler(particularElement[0].desc);
+      DateChangeHandler(particularElement[0].code);
     }
   }, [isEditingMode]);
 
@@ -150,18 +156,15 @@ const ModalInputs = () => {
       try {
         await updateDoc(doc(db, "courses", id), {
           id: id,
-          name: enteredName,
-          email: enteredEmail,
-          gender: genderState,
-          phone: enteredSallary,
-          date: new Date(enteredDate).toLocaleDateString("en-US", options),
+          title: enteredName,
+          code: enteredSallary,
+          desc: enteredDate,
         });
         dispatch(studentDataActions.dataChanging());
         dispatch(modalActions.closeModal());
 
         toast.success("student Update Successfully");
       } catch (error) {
-        console.log(error);
         toast.error("Something went wrong " + error.message);
       }
     }

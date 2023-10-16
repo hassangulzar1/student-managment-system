@@ -20,7 +20,6 @@ const Courses = () => {
         data.forEach((doc) => {
           array.push(doc.data());
         });
-        console.log(array);
         dispatch(studentDataActions.addingData(array));
       } catch (error) {
         return toast.error("data fetching error: " + error.message);

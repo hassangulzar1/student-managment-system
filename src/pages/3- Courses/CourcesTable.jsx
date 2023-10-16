@@ -14,6 +14,7 @@ import { toast } from "react-toastify";
 import { db } from "../../config/firebase-config";
 import { deleteDoc, doc } from "firebase/firestore";
 import { studentDataActions } from "../../store/studentData-slice";
+import { modalActions } from "../../store/modal-slice";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
