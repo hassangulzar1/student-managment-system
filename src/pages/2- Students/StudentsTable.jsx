@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
+import React from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -7,7 +7,9 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { modalActions } from "../../store/modal-slice";
+
 const tableHead = {
   color: "#ACACAC",
   fontFamily: "Montserrat",
@@ -31,7 +33,14 @@ const fallbackText = {
 };
 
 const UserTable = () => {
+  //! Latest States Snaps
   const selectorData = useSelector((state) => state.studentsData.studentsData);
+
+  const dispatch = useDispatch();
+
+  const editingModeHandler = (id) => {
+    dispatch(modalActions.editModal("Student"));
+  };
   return (
     <div style={{ margin: "0 .5rem" }}>
       <TableContainer>
@@ -73,7 +82,7 @@ const UserTable = () => {
                   <TableCell>
                     <EditOutlinedIcon
                       sx={removeEditStyle}
-                      onClick={() => ctx.editingModeHandler(data.id, i)}
+                      onClick={() => editingModeHandler(data.id, i)}
                     />
                     <DeleteOutlineOutlinedIcon
                       sx={removeEditStyle}

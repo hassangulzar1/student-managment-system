@@ -163,8 +163,12 @@ const ModalInputs = () => {
   //   );
   // };
 
-  const formSubmitHandler = async (e) => {
+  const isEditingMode = useSelector((state) => state.modal.isEditing);
+  const isLoading = useSelector((state) => state.studentsData.loadingState);
+
+  const studentSubmitHandler = async (e) => {
     e.preventDefault();
+    dispatch(studentDataActions.startloading());
     let id = Math.random().toString(36).slice(2);
     const options = { year: "numeric", month: "long", day: "numeric" };
     try {
@@ -178,6 +182,7 @@ const ModalInputs = () => {
       });
       dispatch(studentDataActions.dataChanging());
       dispatch(modalActions.closeModal());
+      dispatch(studentDataActions.closeLoading());
       toast.success("New student Added successfully");
     } catch (error) {
       toast.success("Something went wrong" + error.message);
@@ -194,7 +199,7 @@ const ModalInputs = () => {
       }}
     >
       {modalFrom === "Student" && (
-        <form onSubmit={formSubmitHandler}>
+        <form onSubmit={studentSubmitHandler}>
           <TextField
             fullWidth
             sx={{ marginY: 1 }}
@@ -286,15 +291,12 @@ const ModalInputs = () => {
           >
             <Button
               variant="contained"
-              color={ctx.editingMode ? "info" : "success"}
+              color={isEditingMode ? "info" : "success"}
               type="submit"
               disabled={!formIsValid}
             >
-              {ctx.editingMode
-                ? ctx.loadingState
-                  ? "Updating..."
-                  : "Update"
-                : "ADD USER"}
+              {isEditingMode ? (isLoading ? "Updating..." : "Update") : ""}
+              {!isEditingMode ? (isLoading ? "Adding..." : "ADD User") : ""}
             </Button>
             <Button
               variant="outlined"

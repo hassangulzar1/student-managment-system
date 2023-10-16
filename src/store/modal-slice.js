@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-const initialState = { modalStatus: false, modalFrom: "" };
+const initialState = { modalStatus: false, modalFrom: "", isEditing: false };
 
 const modalSlice = createSlice({
   name: "modal",
@@ -12,6 +12,12 @@ const modalSlice = createSlice({
     closeModal(state) {
       state.modalStatus = false;
       state.modalFrom = "";
+      state.isEditing = false;
+    },
+    editModal(state, action) {
+      state.isEditing = true;
+      state.modalStatus = true;
+      state.modalFrom = action.payload;
     },
   },
 });

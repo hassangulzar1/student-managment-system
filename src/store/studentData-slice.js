@@ -1,5 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-const initialState = { studentsData: null, dataChanging: false };
+const initialState = {
+  studentsData: null,
+  dataChanging: false,
+  loadingState: false,
+};
 
 const studentDataSlice = createSlice({
   name: "students",
@@ -8,10 +12,14 @@ const studentDataSlice = createSlice({
     addingData(state, action) {
       state.studentsData = action.payload;
     },
-    removingData(state, action) {},
-    editData(state, action) {},
     dataChanging(state) {
       state.dataChanging = !state.dataChanging;
+    },
+    startloading(state) {
+      state.loadingState = true;
+    },
+    closeLoading(state) {
+      state.loadingState = false;
     },
   },
 });
