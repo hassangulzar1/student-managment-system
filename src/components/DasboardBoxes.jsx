@@ -2,7 +2,14 @@ import React from "react";
 import classes from "./DashboardBoxes.module.css";
 import CountUp from "react-countup";
 
-const DasboardBoxes = ({ className, titleColor, title, count, Icon }) => {
+const DasboardBoxes = ({
+  className,
+  titleColor,
+  title,
+  count,
+  Icon,
+  spinnerColor,
+}) => {
   const styles = className;
   return (
     <div className={`${classes.box} ${classes[styles]}`}>
@@ -10,7 +17,11 @@ const DasboardBoxes = ({ className, titleColor, title, count, Icon }) => {
         {Icon}
         <p style={{ color: titleColor, marginTop: ".2rem" }}>{title}</p>
         <h5>
-          <CountUp end={count} duration={1}></CountUp>
+          {!count ? (
+            <div className={`spinner-grow ` + spinnerColor} role="status"></div>
+          ) : (
+            <CountUp end={count} duration={1}></CountUp>
+          )}
         </h5>
       </div>
     </div>

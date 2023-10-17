@@ -39,6 +39,7 @@ const Dashboard = () => {
         titleColor="black"
         title="Students"
         count={totalStudents}
+        spinnerColor="text-info"
         Icon={
           <SchoolOutlinedIcon sx={{ fontSize: "3rem", color: "#74c1ed" }} />
         }
@@ -48,6 +49,7 @@ const Dashboard = () => {
         titleColor="black"
         title="Courses"
         count={totalCourses}
+        spinnerColor="text-danger"
         Icon={
           <BookmarkBorderOutlinedIcon
             sx={{ fontSize: "3rem", color: "#ee95c5" }}
