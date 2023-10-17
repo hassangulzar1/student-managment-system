@@ -60,7 +60,7 @@ const Dashboard = () => {
         className="attendeceBox"
         titleColor="white"
         title="Attendence"
-        count={12}
+        count={1}
         Icon={
           <PersonOutlineOutlinedIcon
             sx={{ fontSize: "3rem", color: "white" }}
