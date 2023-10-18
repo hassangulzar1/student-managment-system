@@ -1,9 +1,8 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { TextField } from "@mui/material";
 import useInput from "../hooks/use-inputs";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
-import authContext from "../Context/auth-context";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -15,6 +14,7 @@ import { setDoc, doc, updateDoc } from "firebase/firestore";
 import { db } from "../config/firebase-config";
 import { toast } from "react-toastify";
 import { studentDataActions } from "../store/studentData-slice";
+import Autocomplete from "@mui/material/Autocomplete";
 
 const ModalInputs = () => {
   const dispatch = useDispatch();
@@ -22,9 +22,38 @@ const ModalInputs = () => {
   const modalCloseHandler = () => {
     dispatch(modalActions.closeModal());
   };
-  // Data for attendence dropdowns
+
+  //! Data for attendence dropdowns
+  const [selectedStudent, setSelectedStudent] = React.useState(null);
+  const [selectedCourse, setSelectedCourse] = React.useState(null);
+
   const studentsArray = useSelector((state) => state.attendence.studentsData);
   const coursesArray = useSelector((state) => state.attendence.coursesData);
+
+  const propsForStudents = {
+    options: studentsArray,
+    getOptionLabel: (option) => option.name,
+  };
+  const propsForCourses = {
+    options: coursesArray,
+    getOptionLabel: (option) => option.title,
+  };
+
+  const handleAutoComplete = (event, newValue) => {
+    if (event.target.id.slice(0, 7) === "student") {
+      if (newValue) {
+        setSelectedStudent(newValue.id);
+      } else {
+        setSelectedStudent(null);
+      }
+    } else {
+      if (newValue) {
+        setSelectedCourse(newValue.id);
+      } else {
+        setSelectedCourse(null);
+      }
+    }
+  };
   //! Inputs States
   const [genderState, setGenderState] = useState();
   const {
@@ -172,7 +201,7 @@ const ModalInputs = () => {
     dispatch(studentDataActions.closeLoading());
   };
 
-  // Attendence Submit Handler
+  //! Attendence Submit Handler
   const attendenceSubmitHandler = () => {};
   return (
     <div
@@ -388,72 +417,75 @@ const ModalInputs = () => {
 
       {modalFrom === "Attendence" && (
         <form action="" onSubmit={attendenceSubmitHandler}>
-          <TextField
-            fullWidth
-            autoFocus
-            sx={{ marginY: 1 }}
-            type="text"
-            color="warning"
-            label="Course Title"
-            value={enteredName}
-            onChange={(e) => nameChangeHandler(e.target.value)}
-            onBlur={nameBlurHanlder}
-            error={nameInputIsValid}
-            helperText={
-              nameInputIsValid ? "Please enter a valid User Name" : ""
-            }
+          <Autocomplete
+            sx={{ marginY: 2 }}
+            {...propsForStudents}
+            id="students"
+            onChange={handleAutoComplete}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                color="warning"
+                label="Select Student"
+                variant="standard"
+                required
+              />
+            )}
+          />
+
+          <Autocomplete
+            {...propsForCourses}
+            sx={{ marginY: 2 }}
+            id="courses"
+            onChange={handleAutoComplete}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                color="warning"
+                label="Select Course"
+                variant="standard"
+                required
+              />
+            )}
           />
           <TextField
             fullWidth
-            sx={{ marginY: 1 }}
-            type="text"
-            label="Course Code"
+            sx={{ marginY: 2 }}
+            required
             color="warning"
+            type="date"
+            name="date"
             value={enteredDate}
             onChange={(e) => DateChangeHandler(e.target.value)}
             onBlur={DateBlurHandler}
             error={dateInputIsValid}
-            helperText={
-              dateInputIsValid ? "Please enter a valid Course Code " : ""
-            }
+            helperText={dateInputIsValid ? "Please enter a valid Date" : ""}
           />
-          <TextField
-            fullWidth
-            sx={{ marginY: 1 }}
-            type="text"
-            label="Description"
-            value={enteredSallary}
-            color="warning"
-            onChange={(e) => sallaryChangeHandler(e.target.value)}
-            onBlur={sallaryBlurHandler}
-            error={sallaryInputIsValid}
-            helperText={
-              sallaryInputIsValid ? "Please enter a valid Description" : ""
-            }
-          />
-
-          <Stack
-            direction="row"
-            spacing={2}
-            sx={{ display: "flex", justifyContent: "center", marginTop: 2 }}
-          >
-            <Button
-              variant="contained"
-              color={isEditingMode ? "info" : "success"}
-              type="submit"
-              disabled={!formIsValid}
+          <FormControl>
+            <FormLabel id="demo-row-radio-buttons-group-label">
+              Status
+            </FormLabel>
+            <RadioGroup
+              sx={{ display: "flex", justifyContent: "center" }}
+              row
+              aria-labelledby="demo-row-radio-buttons-group-label"
+              name="radio"
+              onChange={(e) => setGenderState(e.target.value)}
             >
-              {isEditingMode ? (isLoading ? "Updating..." : "Update") : ""}
-              {!isEditingMode ? (isLoading ? "Adding..." : "ADD Course") : ""}
-            </Button>
-            <Button
-              variant="outlined"
-              color="error"
-              onClick={modalCloseHandler}
-            >
-              Close
-            </Button>
-          </Stack>
+              <FormControlLabel
+                value="present"
+                checked={genderState === "present"}
+                control={<Radio />}
+                label="Present"
+              />
+              <FormControlLabel
+                value="absent"
+                checked={genderState === "absent"}
+                control={<Radio />}
+                label="Absent"
+              />
+            </RadioGroup>
+          </FormControl>
         </form>
       )}
     </div>
