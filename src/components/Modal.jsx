@@ -60,6 +60,7 @@ export default function TransitionsModal() {
             >
               {modalState.modalFrom === "Student" && "ADD NEW STUDENTS"}
               {modalState.modalFrom === "Course" && "ADD NEW COURSES"}
+              {modalState.modalFrom === "Attendence" && "Record Attendence"}
             </Typography>
             <ModalInputs />
           </Box>

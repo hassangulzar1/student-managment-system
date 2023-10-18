@@ -22,8 +22,9 @@ const ModalInputs = () => {
   const modalCloseHandler = () => {
     dispatch(modalActions.closeModal());
   };
-
-  const ctx = useContext(authContext);
+  // Data for attendence dropdowns
+  const studentsArray = useSelector((state) => state.attendence.studentsData);
+  const coursesArray = useSelector((state) => state.attendence.coursesData);
   //! Inputs States
   const [genderState, setGenderState] = useState();
   const {
@@ -171,6 +172,8 @@ const ModalInputs = () => {
     dispatch(studentDataActions.closeLoading());
   };
 
+  // Attendence Submit Handler
+  const attendenceSubmitHandler = () => {};
   return (
     <div
       style={{
@@ -314,6 +317,77 @@ const ModalInputs = () => {
 
       {modalFrom === "Course" && (
         <form action="" onSubmit={courseSubmitHandler}>
+          <TextField
+            fullWidth
+            autoFocus
+            sx={{ marginY: 1 }}
+            type="text"
+            color="warning"
+            label="Course Title"
+            value={enteredName}
+            onChange={(e) => nameChangeHandler(e.target.value)}
+            onBlur={nameBlurHanlder}
+            error={nameInputIsValid}
+            helperText={
+              nameInputIsValid ? "Please enter a valid User Name" : ""
+            }
+          />
+          <TextField
+            fullWidth
+            sx={{ marginY: 1 }}
+            type="text"
+            label="Course Code"
+            color="warning"
+            value={enteredDate}
+            onChange={(e) => DateChangeHandler(e.target.value)}
+            onBlur={DateBlurHandler}
+            error={dateInputIsValid}
+            helperText={
+              dateInputIsValid ? "Please enter a valid Course Code " : ""
+            }
+          />
+          <TextField
+            fullWidth
+            sx={{ marginY: 1 }}
+            type="text"
+            label="Description"
+            value={enteredSallary}
+            color="warning"
+            onChange={(e) => sallaryChangeHandler(e.target.value)}
+            onBlur={sallaryBlurHandler}
+            error={sallaryInputIsValid}
+            helperText={
+              sallaryInputIsValid ? "Please enter a valid Description" : ""
+            }
+          />
+
+          <Stack
+            direction="row"
+            spacing={2}
+            sx={{ display: "flex", justifyContent: "center", marginTop: 2 }}
+          >
+            <Button
+              variant="contained"
+              color={isEditingMode ? "info" : "success"}
+              type="submit"
+              disabled={!formIsValid}
+            >
+              {isEditingMode ? (isLoading ? "Updating..." : "Update") : ""}
+              {!isEditingMode ? (isLoading ? "Adding..." : "ADD Course") : ""}
+            </Button>
+            <Button
+              variant="outlined"
+              color="error"
+              onClick={modalCloseHandler}
+            >
+              Close
+            </Button>
+          </Stack>
+        </form>
+      )}
+
+      {modalFrom === "Attendence" && (
+        <form action="" onSubmit={attendenceSubmitHandler}>
           <TextField
             fullWidth
             autoFocus
