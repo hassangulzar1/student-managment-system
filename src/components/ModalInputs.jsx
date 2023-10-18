@@ -473,12 +473,14 @@ const ModalInputs = () => {
               onChange={(e) => setGenderState(e.target.value)}
             >
               <FormControlLabel
+                required
                 value="present"
                 checked={genderState === "present"}
                 control={<Radio />}
                 label="Present"
               />
               <FormControlLabel
+                required
                 value="absent"
                 checked={genderState === "absent"}
                 control={<Radio />}
@@ -486,6 +488,31 @@ const ModalInputs = () => {
               />
             </RadioGroup>
           </FormControl>
+          <Stack
+            direction="row"
+            spacing={2}
+            sx={{ display: "flex", justifyContent: "center", marginTop: 2 }}
+          >
+            <Button
+              variant="contained"
+              color={isEditingMode ? "info" : "success"}
+              type="submit"
+            >
+              {isEditingMode ? (isLoading ? "Updating..." : "Update") : ""}
+              {!isEditingMode
+                ? isLoading
+                  ? "Adding..."
+                  : "Mark Attendence"
+                : ""}
+            </Button>
+            <Button
+              variant="outlined"
+              color="error"
+              onClick={modalCloseHandler}
+            >
+              Close
+            </Button>
+          </Stack>
         </form>
       )}
     </div>
