@@ -9,6 +9,11 @@ import Paper from "@mui/material/Paper";
 import { useSelector } from "react-redux";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import { studentDataActions } from "../../store/studentData-slice";
+import { toast } from "react-toastify";
+import { db } from "../../config/firebase-config";
+import { deleteDoc, doc } from "firebase/firestore";
+import { useDispatch } from "react-redux";
 
 //! Styles
 const removeEditStyle = {
@@ -26,16 +31,19 @@ const fallbackText = {
   fontSize: "1.5rem",
   marginTop: "2rem",
 };
+
 const tableHead = {
   color: "#ACACAC",
   fontFamily: "Montserrat",
   fontWeight: "bold",
 };
+
 const tableCell = {
   fontFamily: "Montserrat",
   fontWeight: "600",
 };
 const AttendenceTable = () => {
+  const dispatch = useDispatch();
   const studentsArray = useSelector((state) => state.attendence.studentsData);
   const coursesArray = useSelector((state) => state.attendence.coursesData);
   const studentsIds = studentsArray.map((id) => id.id);
@@ -45,6 +53,22 @@ const AttendenceTable = () => {
   const attendenceData = useSelector(
     (state) => state.attendence.attendenceData
   );
+
+  //! deleting user
+  const deleteListHandle = async (Id) => {
+    const confirm = window.confirm("Are you sure you want to delete the User?");
+    if (confirm) {
+      try {
+        await deleteDoc(doc(db, "attendence", Id));
+        dispatch(studentDataActions.dataChanging());
+        toast.success(`Student Removed Successfully`);
+      } catch (error) {
+        toast.error(error.message);
+      }
+    } else {
+      return;
+    }
+  };
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
@@ -95,9 +119,9 @@ const AttendenceTable = () => {
                 />
                 <DeleteOutlineOutlinedIcon
                   sx={removeEditStyle}
-                  // onClick={() => {
-                  //   deleteListHandler(data.id);
-                  // }}
+                  onClick={() => {
+                    deleteListHandle(data.id);
+                  }}
                 />
               </TableCell>
             </TableRow>
