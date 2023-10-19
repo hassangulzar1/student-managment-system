@@ -219,6 +219,7 @@ const ModalInputs = () => {
     ) {
       return toast.error("you already mark this student attendence");
     }
+
     dispatch(studentDataActions.startloading());
     if (!isEditingMode) {
       let id = Math.random().toString(36).slice(2);
