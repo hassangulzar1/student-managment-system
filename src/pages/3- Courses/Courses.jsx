@@ -29,7 +29,7 @@ const Courses = () => {
     dataFetching();
   }, [dataTracking]);
   return (
-    <div style={{ backgroundColor: "#F8F8F8", height: "90vh" }}>
+    <div style={{ backgroundColor: "#F8F8F8", height: "100vh" }}>
       <Modal />
       <AddCourses />
       <CourseTable />

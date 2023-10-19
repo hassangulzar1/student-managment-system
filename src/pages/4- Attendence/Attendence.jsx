@@ -6,7 +6,7 @@ import { db } from "../../config/firebase-config";
 import { useDispatch, useSelector } from "react-redux";
 import { attendenceDataActions } from "../../store/attendence-slice";
 import { toast } from "react-toastify";
-
+import AttendenceTable from "./AttendenceTable";
 const Attendence = () => {
   const dispatch = useDispatch();
   const dataTracking = useSelector((state) => state.studentsData.dataChanging);
@@ -39,10 +39,11 @@ const Attendence = () => {
   }, [dataTracking]);
 
   return (
-    <>
+    <div style={{ backgroundColor: "#F8F8F8", height: "100vh" }}>
       <Modal />
       <AddAttendence />
-    </>
+      <AttendenceTable />
+    </div>
   );
 };
 
