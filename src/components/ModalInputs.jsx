@@ -208,15 +208,16 @@ const ModalInputs = () => {
 
   const attendenceSubmitHandler = async (e) => {
     e.preventDefault();
-    const prevStudents = prevAttendence.map((e) => e.studentId);
-    const prevCourses = prevAttendence.map((e) => e.courseId);
-    const prevDates = prevAttendence.map((e) => e.date);
-
-    if (
-      prevStudents.includes(selectedStudent) &&
-      prevCourses.includes(selectedCourse) &&
-      prevDates.includes(enteredDate)
-    ) {
+    const checkIfExist = prevAttendence.filter((data) => {
+      if (
+        data.studentId === selectedStudent &&
+        data.courseId === selectedCourse &&
+        data.date === enteredDate
+      ) {
+        return data;
+      }
+    });
+    if (checkIfExist.length > 0) {
       return toast.error("you already mark this student attendence");
     }
 
