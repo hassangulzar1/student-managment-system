@@ -64,7 +64,12 @@ const AttendenceTable = () => {
               <TableCell align="right">
                 {new Date(data.date).toLocaleDateString("en-US", options)}
               </TableCell>
-              <TableCell align="right">{data.status}</TableCell>
+              <TableCell
+                sx={{ color: data.status === "present" ? "green" : "red" }}
+                align="right"
+              >
+                {data.status}
+              </TableCell>
               <TableCell align="right">
                 <EditOutlinedIcon
                   sx={removeEditStyle}
