@@ -98,7 +98,7 @@ const ModalInputs = () => {
   const isEditingMode = useSelector((state) => state.modal.isEditing);
   const isLoading = useSelector((state) => state.studentsData.loadingState);
   const dataArray = useSelector((state) => state.studentsData.studentsData);
-  const attendenceArray = useSelector(
+  const prevAttendence = useSelector(
     (state) => state.attendence.attendenceData
   );
   const id = useSelector((state) => state.studentsData.id);
@@ -118,7 +118,7 @@ const ModalInputs = () => {
       sallaryChangeHandler(particularElement[0].desc);
       DateChangeHandler(particularElement[0].code);
     } else {
-      let particularElement = attendenceArray.filter((e) => e.id === id);
+      let particularElement = prevAttendence.filter((e) => e.id === id);
       let student = studentsArray.filter(
         (e) => e.id === particularElement[0].studentId
       );
@@ -215,10 +215,6 @@ const ModalInputs = () => {
   };
 
   //! Attendence Submit Handler
-  const prevAttendence = useSelector(
-    (state) => state.attendence.attendenceData
-  );
-
   const attendenceSubmitHandler = async (e) => {
     e.preventDefault();
 
