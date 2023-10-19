@@ -26,7 +26,6 @@ const ModalInputs = () => {
   //! Data for attendence dropdowns
   const [selectedStudent, setSelectedStudent] = React.useState(null);
   const [selectedCourse, setSelectedCourse] = React.useState(null);
-
   const studentsArray = useSelector((state) => state.attendence.studentsData);
   const coursesArray = useSelector((state) => state.attendence.coursesData);
 
@@ -42,13 +41,13 @@ const ModalInputs = () => {
   const handleAutoComplete = (event, newValue) => {
     if (event.target.id.slice(0, 7) === "student") {
       if (newValue) {
-        setSelectedStudent(newValue.id);
+        setSelectedStudent(newValue);
       } else {
         setSelectedStudent(null);
       }
     } else {
       if (newValue) {
-        setSelectedCourse(newValue.id);
+        setSelectedCourse(newValue);
       } else {
         setSelectedCourse(null);
       }
@@ -99,6 +98,9 @@ const ModalInputs = () => {
   const isEditingMode = useSelector((state) => state.modal.isEditing);
   const isLoading = useSelector((state) => state.studentsData.loadingState);
   const dataArray = useSelector((state) => state.studentsData.studentsData);
+  const attendenceArray = useSelector(
+    (state) => state.attendence.attendenceData
+  );
   const id = useSelector((state) => state.studentsData.id);
   const From = useSelector((state) => state.modal.modalFrom);
 
@@ -116,6 +118,12 @@ const ModalInputs = () => {
       nameChangeHandler(particularElement[0].title);
       sallaryChangeHandler(particularElement[0].desc);
       DateChangeHandler(particularElement[0].code);
+    } else {
+      let particularElement = attendenceArray.filter((e) => e.id === id);
+      propsForStudents.getOptionLabel(studentsArray[0]);
+      // setSelectedStudent("particularElement[0].title");
+      // sallaryChangeHandler(particularElement[0].desc);
+      // DateChangeHandler(particularElement[0].code);
     }
   }, [isEditingMode]);
 
@@ -208,6 +216,7 @@ const ModalInputs = () => {
 
   const attendenceSubmitHandler = async (e) => {
     e.preventDefault();
+
     const checkIfExist = prevAttendence.filter((data) => {
       if (
         data.studentId === selectedStudent &&
@@ -227,8 +236,8 @@ const ModalInputs = () => {
       try {
         await setDoc(doc(db, "attendence", id), {
           id: id,
-          studentId: selectedStudent,
-          courseId: selectedCourse,
+          studentId: selectedStudent.id,
+          courseId: selectedCourse.id,
           date: enteredDate,
           status: genderState,
         });
@@ -257,6 +266,7 @@ const ModalInputs = () => {
     }
     dispatch(studentDataActions.closeLoading());
   };
+
   return (
     <div
       style={{
@@ -475,6 +485,7 @@ const ModalInputs = () => {
             sx={{ marginY: 2 }}
             {...propsForStudents}
             id="students"
+            value={selectedStudent}
             onChange={handleAutoComplete}
             renderInput={(params) => (
               <TextField
@@ -491,6 +502,7 @@ const ModalInputs = () => {
             {...propsForCourses}
             sx={{ marginY: 2 }}
             id="courses"
+            value={selectedCourse}
             onChange={handleAutoComplete}
             renderInput={(params) => (
               <TextField

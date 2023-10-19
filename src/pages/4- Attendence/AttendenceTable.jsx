@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { studentDataActions } from "../../store/studentData-slice";
+import { modalActions } from "../../store/modal-slice";
 import { toast } from "react-toastify";
 import { db } from "../../config/firebase-config";
 import { deleteDoc, doc } from "firebase/firestore";
@@ -53,7 +54,11 @@ const AttendenceTable = () => {
   const attendenceData = useSelector(
     (state) => state.attendence.attendenceData
   );
-
+  //! Editing Handler
+  const editingModeHandler = (id) => {
+    dispatch(modalActions.editModal("Attendence"));
+    dispatch(studentDataActions.editingData(id));
+  };
   //! deleting user
   const deleteListHandle = async (Id) => {
     const confirm = window.confirm("Are you sure you want to delete the User?");
@@ -88,7 +93,7 @@ const AttendenceTable = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {attendenceData.map((data) => (
+          {attendenceData.map((data, i) => (
             <TableRow
               key={data.id}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -115,7 +120,7 @@ const AttendenceTable = () => {
               <TableCell align="right">
                 <EditOutlinedIcon
                   sx={removeEditStyle}
-                  // onClick={() => editingModeHandler(data.id, i)}
+                  onClick={() => editingModeHandler(data.id, i)}
                 />
                 <DeleteOutlineOutlinedIcon
                   sx={removeEditStyle}
