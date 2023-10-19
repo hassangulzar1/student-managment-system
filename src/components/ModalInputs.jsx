@@ -103,7 +103,6 @@ const ModalInputs = () => {
   );
   const id = useSelector((state) => state.studentsData.id);
   const From = useSelector((state) => state.modal.modalFrom);
-
   //! Updating inputs
   useEffect(() => {
     if (isEditingMode && From === "Student") {
@@ -120,10 +119,16 @@ const ModalInputs = () => {
       DateChangeHandler(particularElement[0].code);
     } else {
       let particularElement = attendenceArray.filter((e) => e.id === id);
-      propsForStudents.getOptionLabel(studentsArray[0]);
-      // setSelectedStudent("particularElement[0].title");
-      // sallaryChangeHandler(particularElement[0].desc);
-      // DateChangeHandler(particularElement[0].code);
+      let student = studentsArray.filter(
+        (e) => e.id === particularElement[0].studentId
+      );
+      let course = coursesArray.filter(
+        (e) => e.id === particularElement[0].courseId
+      );
+      setSelectedStudent(student[0]);
+      setSelectedCourse(course[0]);
+      setGenderState(particularElement[0].status);
+      DateChangeHandler(particularElement[0].date);
     }
   }, [isEditingMode]);
 
@@ -251,8 +256,8 @@ const ModalInputs = () => {
       try {
         await updateDoc(doc(db, "attendence", id), {
           id: id,
-          studentId: selectedStudent,
-          courseId: selectedCourse,
+          studentId: selectedStudent.id,
+          courseId: selectedCourse.id,
           date: enteredDate,
           status: genderState,
         });
