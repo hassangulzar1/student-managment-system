@@ -32,7 +32,7 @@ const ModalInputs = () => {
 
   const propsForStudents = {
     options: studentsArray,
-    getOptionLabel: (option) => option.name,
+    getOptionLabel: (option) => `${option.name}  (${option.email})`,
   };
   const propsForCourses = {
     options: coursesArray,
@@ -202,7 +202,59 @@ const ModalInputs = () => {
   };
 
   //! Attendence Submit Handler
-  const attendenceSubmitHandler = () => {};
+  const prevAttendence = useSelector(
+    (state) => state.attendence.attendenceData
+  );
+
+  const attendenceSubmitHandler = async (e) => {
+    e.preventDefault();
+    const prevStudents = prevAttendence.map((e) => e.studentId);
+    const prevCourses = prevAttendence.map((e) => e.courseId);
+    const prevDates = prevAttendence.map((e) => e.date);
+
+    if (
+      prevStudents.includes(selectedStudent) &&
+      prevCourses.includes(selectedCourse) &&
+      prevDates.includes(enteredDate)
+    ) {
+      return toast.error("you already mark this student attendence");
+    }
+    dispatch(studentDataActions.startloading());
+    if (!isEditingMode) {
+      let id = Math.random().toString(36).slice(2);
+      try {
+        await setDoc(doc(db, "attendence", id), {
+          id: id,
+          studentId: selectedStudent,
+          courseId: selectedCourse,
+          date: enteredDate,
+          status: genderState,
+        });
+        dispatch(studentDataActions.dataChanging());
+        dispatch(modalActions.closeModal());
+        toast.success("Attendence Marked successfully");
+      } catch (error) {
+        toast.error("Something went wrong" + error.message);
+      }
+    } else {
+      try {
+        await updateDoc(doc(db, "attendence", id), {
+          id: id,
+          studentId: selectedStudent,
+          courseId: selectedCourse,
+          date: enteredDate,
+          status: genderState,
+        });
+        dispatch(studentDataActions.dataChanging());
+        dispatch(modalActions.closeModal());
+
+        toast.success("attendence Update Successfully");
+      } catch (error) {
+        toast.error("Something went wrong " + error.message);
+      }
+    }
+    dispatch(studentDataActions.closeLoading());
+  };
   return (
     <div
       style={{
@@ -501,7 +553,7 @@ const ModalInputs = () => {
               {isEditingMode ? (isLoading ? "Updating..." : "Update") : ""}
               {!isEditingMode
                 ? isLoading
-                  ? "Adding..."
+                  ? "Marking..."
                   : "Mark Attendence"
                 : ""}
             </Button>

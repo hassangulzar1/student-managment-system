@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   studentsData: [],
   coursesData: [],
+  attendenceData: [],
 };
 
 const attendenceDataSlice = createSlice({
@@ -13,6 +14,9 @@ const attendenceDataSlice = createSlice({
     },
     addingCourses(state, action) {
       state.coursesData = action.payload;
+    },
+    addingAttendence(state, action) {
+      state.attendenceData = action.payload;
     },
   },
 });
