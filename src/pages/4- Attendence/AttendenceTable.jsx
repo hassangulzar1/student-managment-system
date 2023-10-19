@@ -26,7 +26,15 @@ const fallbackText = {
   fontSize: "1.5rem",
   marginTop: "2rem",
 };
-
+const tableHead = {
+  color: "#ACACAC",
+  fontFamily: "Montserrat",
+  fontWeight: "bold",
+};
+const tableCell = {
+  fontFamily: "Montserrat",
+  fontWeight: "600",
+};
 const AttendenceTable = () => {
   const studentsArray = useSelector((state) => state.attendence.studentsData);
   const coursesArray = useSelector((state) => state.attendence.coursesData);
@@ -40,13 +48,19 @@ const AttendenceTable = () => {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
-        <TableHead>
+        <TableHead sx={{ backgroundColor: "#F8F8F8" }}>
           <TableRow>
-            <TableCell>Student (N)</TableCell>
-            <TableCell align="right">Course (N)</TableCell>
-            <TableCell align="right">Attendence (DATE)</TableCell>
-            <TableCell align="right">Status</TableCell>
-            <TableCell align="right">Actions</TableCell>
+            <TableCell sx={tableHead}>Student (Name)</TableCell>
+            <TableCell sx={tableHead} align="right">
+              Course (Name)
+            </TableCell>
+            <TableCell sx={tableHead} align="right">
+              Attendence (DATE)
+            </TableCell>
+            <TableCell sx={tableHead} align="right">
+              Status
+            </TableCell>
+            <TableCell sx={tableHead} align="right"></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -55,17 +69,21 @@ const AttendenceTable = () => {
               key={data.id}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
-              <TableCell component="th" scope="row">
+              <TableCell component="th" scope="row" sx={tableCell}>
                 {studentsArray[studentsIds.indexOf(data.studentId)].name}
               </TableCell>
-              <TableCell align="right">
+              <TableCell align="right" sx={tableCell}>
                 {coursesArray[coursesIds.indexOf(data.courseId)].title}
               </TableCell>
-              <TableCell align="right">
+              <TableCell align="right" sx={tableCell}>
                 {new Date(data.date).toLocaleDateString("en-US", options)}
               </TableCell>
               <TableCell
-                sx={{ color: data.status === "present" ? "green" : "red" }}
+                sx={{
+                  fontFamily: "Montserrat",
+                  fontWeight: "600",
+                  color: data.status === "present" ? "green" : "red",
+                }}
                 align="right"
               >
                 {data.status}
