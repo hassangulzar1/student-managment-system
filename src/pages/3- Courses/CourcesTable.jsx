@@ -62,6 +62,9 @@ const UserTable = () => {
   //! Latest States Snaps
   const selectorData = useSelector((state) => state.studentsData.studentsData);
   const isLoading = useSelector((state) => state.studentsData.loadingState);
+  const attendenceData = useSelector(
+    (state) => state.attendence.attendenceData
+  );
   //! Editing Handler
   const editingModeHandler = (id) => {
     dispatch(modalActions.editModal("Course"));
@@ -74,6 +77,11 @@ const UserTable = () => {
     );
     if (confirm) {
       try {
+        attendenceData.map(async (e) => {
+          if (e.courseId === Id) {
+            await deleteDoc(doc(db, "attendence", e.id));
+          }
+        });
         await deleteDoc(doc(db, "courses", Id));
         dispatch(studentDataActions.dataChanging());
         toast.success(`Course Removed Successfully`);

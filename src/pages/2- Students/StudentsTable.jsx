@@ -12,7 +12,7 @@ import { modalActions } from "../../store/modal-slice";
 import { studentDataActions } from "../../store/studentData-slice";
 import { toast } from "react-toastify";
 import { db } from "../../config/firebase-config";
-import { deleteDoc, doc } from "firebase/firestore";
+import { deleteDoc, doc, setDoc } from "firebase/firestore";
 
 const tableHead = {
   color: "#ACACAC",
@@ -45,6 +45,9 @@ const UserTable = () => {
   const options = { year: "numeric", month: "long", day: "numeric" };
   //! Latest States Snaps
   const selectorData = useSelector((state) => state.studentsData.studentsData);
+  const attendenceData = useSelector(
+    (state) => state.attendence.attendenceData
+  );
   const isLoading = useSelector((state) => state.studentsData.loadingState);
   //! Editing Handler
   const editingModeHandler = (id) => {
@@ -54,13 +57,20 @@ const UserTable = () => {
   //! deleting user
   const deleteListHandle = async (Id) => {
     const confirm = window.confirm("Are you sure you want to delete the User?");
+
     if (confirm) {
       try {
+        attendenceData.map(async (e) => {
+          if (e.studentId === Id) {
+            await deleteDoc(doc(db, "attendence", e.id));
+          }
+        });
         await deleteDoc(doc(db, "students", Id));
+
         dispatch(studentDataActions.dataChanging());
         toast.success(`Student Removed Successfully`);
       } catch (error) {
-        toast.error(err.message);
+        toast.error(error.message);
       }
     } else {
       return;

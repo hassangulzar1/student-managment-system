@@ -132,7 +132,6 @@ const ModalInputs = () => {
   }, [isEditingMode]);
 
   //! Student Data Submit Handler
-
   const studentSubmitHandler = async (e) => {
     e.preventDefault();
     dispatch(studentDataActions.startloading());
