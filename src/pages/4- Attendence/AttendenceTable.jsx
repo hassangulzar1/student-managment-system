@@ -80,6 +80,7 @@ const AttendenceTable = () => {
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
         <TableHead sx={{ backgroundColor: "#F8F8F8" }}>
           <TableRow>
+            <TableCell sx={tableHead}></TableCell>
             <TableCell sx={tableHead}>Student (Name)</TableCell>
             <TableCell sx={tableHead} align="right">
               Course (Name)
@@ -101,6 +102,9 @@ const AttendenceTable = () => {
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row" sx={tableCell}>
+                  {i + 1}
+                </TableCell>
+                <TableCell sx={tableCell}>
                   {studentsArray[studentsIds.indexOf(data.studentId)].name}
                 </TableCell>
                 <TableCell align="right" sx={tableCell}>
