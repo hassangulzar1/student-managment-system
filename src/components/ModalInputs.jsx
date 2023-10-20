@@ -93,7 +93,6 @@ const ModalInputs = () => {
   if (nameIsValid && sallaryIsValid && dateIsValid) {
     formIsValid = true;
   }
-
   //! Submit Handler
   const isEditingMode = useSelector((state) => state.modal.isEditing);
   const isLoading = useSelector((state) => state.studentsData.loadingState);
@@ -117,7 +116,7 @@ const ModalInputs = () => {
       nameChangeHandler(particularElement[0].title);
       sallaryChangeHandler(particularElement[0].desc);
       DateChangeHandler(particularElement[0].code);
-    } else {
+    } else if (isEditingMode && From === "Attendence") {
       let particularElement = prevAttendence.filter((e) => e.id === id);
       let student = studentsArray.filter(
         (e) => e.id === particularElement[0].studentId
@@ -462,7 +461,20 @@ const ModalInputs = () => {
           >
             <Button
               variant="contained"
-              color={isEditingMode ? "info" : "success"}
+              sx={{
+                color: "black",
+                marginTop: ".4rem",
+                fontWeight: "bold",
+                paddingX: "1rem",
+                fontFamily: "Montserrat",
+                background: isEditingMode ? "success" : "#FEAF00",
+                color: "#FFFFFF",
+                marginRight: 4,
+                "&:hover": {
+                  background:
+                    "linear-gradient(90deg, rgba(254,175,0,1) 0%, rgba(252,220,148,1) 100%)",
+                },
+              }}
               type="submit"
               disabled={!formIsValid}
             >
@@ -562,7 +574,20 @@ const ModalInputs = () => {
           >
             <Button
               variant="contained"
-              color={isEditingMode ? "info" : "success"}
+              sx={{
+                color: "black",
+                marginTop: ".4rem",
+                fontWeight: "bold",
+                paddingX: "1rem",
+                fontFamily: "Montserrat",
+                background: isEditingMode ? "success" : "#FEAF00",
+                color: "#FFFFFF",
+                marginRight: 4,
+                "&:hover": {
+                  background:
+                    "linear-gradient(90deg, rgba(254,175,0,1) 0%, rgba(252,220,148,1) 100%)",
+                },
+              }}
               type="submit"
             >
               {isEditingMode ? (isLoading ? "Updating..." : "Update") : ""}
