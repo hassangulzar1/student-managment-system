@@ -136,6 +136,9 @@ const AttendenceTable = () => {
         </TableBody>
       </Table>
       {isLoading && <p style={fallbackText}>Data Fetching...</p>}
+      {!isLoading && attendenceData.length === 0 && (
+        <p style={fallbackText}>No Data Found!</p>
+      )}
     </TableContainer>
   );
 };
