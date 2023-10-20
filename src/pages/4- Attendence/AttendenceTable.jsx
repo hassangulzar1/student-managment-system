@@ -45,6 +45,7 @@ const tableCell = {
 };
 const AttendenceTable = () => {
   const dispatch = useDispatch();
+  const isLoading = useSelector((state) => state.studentsData.loadingState);
   const studentsArray = useSelector((state) => state.attendence.studentsData);
   const coursesArray = useSelector((state) => state.attendence.coursesData);
   const studentsIds = studentsArray.map((id) => id.id);
@@ -93,46 +94,48 @@ const AttendenceTable = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {attendenceData.map((data, i) => (
-            <TableRow
-              key={data.id}
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-            >
-              <TableCell component="th" scope="row" sx={tableCell}>
-                {studentsArray[studentsIds.indexOf(data.studentId)].name}
-              </TableCell>
-              <TableCell align="right" sx={tableCell}>
-                {coursesArray[coursesIds.indexOf(data.courseId)].title}
-              </TableCell>
-              <TableCell align="right" sx={tableCell}>
-                {new Date(data.date).toLocaleDateString("en-US", options)}
-              </TableCell>
-              <TableCell
-                sx={{
-                  fontFamily: "Montserrat",
-                  fontWeight: "600",
-                  color: data.status === "present" ? "green" : "red",
-                }}
-                align="right"
+          {!isLoading &&
+            attendenceData.map((data, i) => (
+              <TableRow
+                key={data.id}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                {data.status}
-              </TableCell>
-              <TableCell align="right">
-                <EditOutlinedIcon
-                  sx={removeEditStyle}
-                  onClick={() => editingModeHandler(data.id, i)}
-                />
-                <DeleteOutlineOutlinedIcon
-                  sx={removeEditStyle}
-                  onClick={() => {
-                    deleteListHandle(data.id);
+                <TableCell component="th" scope="row" sx={tableCell}>
+                  {studentsArray[studentsIds.indexOf(data.studentId)].name}
+                </TableCell>
+                <TableCell align="right" sx={tableCell}>
+                  {coursesArray[coursesIds.indexOf(data.courseId)].title}
+                </TableCell>
+                <TableCell align="right" sx={tableCell}>
+                  {new Date(data.date).toLocaleDateString("en-US", options)}
+                </TableCell>
+                <TableCell
+                  sx={{
+                    fontFamily: "Montserrat",
+                    fontWeight: "600",
+                    color: data.status === "present" ? "green" : "red",
                   }}
-                />
-              </TableCell>
-            </TableRow>
-          ))}
+                  align="right"
+                >
+                  {data.status}
+                </TableCell>
+                <TableCell align="right">
+                  <EditOutlinedIcon
+                    sx={removeEditStyle}
+                    onClick={() => editingModeHandler(data.id, i)}
+                  />
+                  <DeleteOutlineOutlinedIcon
+                    sx={removeEditStyle}
+                    onClick={() => {
+                      deleteListHandle(data.id);
+                    }}
+                  />
+                </TableCell>
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
+      {isLoading && <p style={fallbackText}>Data Fetching...</p>}
     </TableContainer>
   );
 };

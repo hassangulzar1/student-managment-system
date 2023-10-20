@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { attendenceDataActions } from "../../store/attendence-slice";
 import { toast } from "react-toastify";
 import AttendenceTable from "./AttendenceTable";
+import { studentDataActions } from "../../store/studentData-slice";
+
 const Attendence = () => {
   const dispatch = useDispatch();
   const dataTracking = useSelector((state) => state.studentsData.dataChanging);
@@ -15,6 +17,7 @@ const Attendence = () => {
       let studentsArray = [];
       let coursesArray = [];
       let attendenceArray = [];
+      dispatch(studentDataActions.startloading());
       try {
         const studentsData = await getDocs(collection(db, "students"));
         const coursesData = await getDocs(collection(db, "courses"));
@@ -34,6 +37,7 @@ const Attendence = () => {
       } catch (error) {
         toast.error("data fetching error: " + error.message);
       }
+      dispatch(studentDataActions.closeLoading());
     };
     dataFetching();
   }, [dataTracking]);
