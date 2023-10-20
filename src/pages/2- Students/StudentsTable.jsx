@@ -42,6 +42,7 @@ const fallbackText = {
 
 const UserTable = () => {
   const dispatch = useDispatch();
+  const options = { year: "numeric", month: "long", day: "numeric" };
   //! Latest States Snaps
   const selectorData = useSelector((state) => state.studentsData.studentsData);
   const isLoading = useSelector((state) => state.studentsData.loadingState);
@@ -100,7 +101,9 @@ const UserTable = () => {
                   <TableCell sx={tableCell}>{data.name}</TableCell>
                   <TableCell sx={tableCell}>{data.email}</TableCell>
                   <TableCell sx={tableCell}>{data.phone}</TableCell>
-                  <TableCell sx={tableCell}>{data.date}</TableCell>
+                  <TableCell sx={tableCell}>
+                    {new Date(data.date).toLocaleDateString("en-US", options)}
+                  </TableCell>
                   <TableCell sx={tableCell}>{data.gender}</TableCell>
                   <TableCell>
                     <EditOutlinedIcon

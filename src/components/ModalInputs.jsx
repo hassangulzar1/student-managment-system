@@ -109,7 +109,7 @@ const ModalInputs = () => {
       nameChangeHandler(particularElement[0].name);
       emailChangeHandler(particularElement[0].email);
       sallaryChangeHandler(particularElement[0].phone);
-      DateChangeHandler(new Date(particularElement[0].date).toDateString());
+      DateChangeHandler(particularElement[0].date);
       setGenderState(particularElement[0].gender);
     } else if (isEditingMode && From === "Course") {
       let particularElement = dataArray.filter((e) => e.id === id);
@@ -132,7 +132,7 @@ const ModalInputs = () => {
   }, [isEditingMode]);
 
   //! Student Data Submit Handler
-  const options = { year: "numeric", month: "long", day: "numeric" };
+
   const studentSubmitHandler = async (e) => {
     e.preventDefault();
     dispatch(studentDataActions.startloading());
@@ -145,7 +145,7 @@ const ModalInputs = () => {
           email: enteredEmail,
           gender: genderState,
           phone: enteredSallary,
-          date: new Date(enteredDate).toLocaleDateString("en-US", options),
+          date: enteredDate,
         });
         dispatch(studentDataActions.dataChanging());
         dispatch(modalActions.closeModal());
@@ -161,7 +161,7 @@ const ModalInputs = () => {
           email: enteredEmail,
           gender: genderState,
           phone: enteredSallary,
-          date: new Date(enteredDate).toLocaleDateString("en-US", options),
+          date: enteredDate,
         });
         dispatch(studentDataActions.dataChanging());
         dispatch(modalActions.closeModal());
