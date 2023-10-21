@@ -6,10 +6,13 @@ import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined
 import { db } from "../../config/firebase-config";
 import { getDocs, collection } from "firebase/firestore";
 import Graph from "./Graph";
+import { TakeoutDining } from "@mui/icons-material";
 const Dashboard = () => {
   const [studentsData, setStudentsData] = useState([]);
   const [coursesData, setCoursesData] = useState([]);
   const [attendenceData, setAttendenceData] = useState([]);
+  const [Data, setData] = useState([]);
+
   useEffect(() => {
     const dataFetching = async () => {
       let studentsArray = [];
@@ -37,6 +40,29 @@ const Dashboard = () => {
     };
     dataFetching();
   }, []);
+  useEffect(() => {
+    const data = [];
+    let absent = 0;
+    let present = 0;
+    let courseName = "";
+    coursesData.forEach((element, i) => {
+      courseName = coursesData[i].title;
+      attendenceData.map((e) => {
+        if (element.id === e.courseId) {
+          if (e.status === "present") {
+            present++;
+          } else {
+            absent++;
+          }
+        }
+      });
+      data.push({ courseName, present, absent });
+      absent = 0;
+      present = 0;
+      courseName = "";
+    });
+    setData(data);
+  }, [studentsData, coursesData, attendenceData]);
   return (
     <>
       <div className="d-flex justify-content-center">
@@ -75,15 +101,11 @@ const Dashboard = () => {
           }
         />
       </div>
-      <div className="d-flex justify-content-center mt-2">
-        <Graph
-          studentsArray={studentsData}
-          coursesArray={coursesData}
-          attendenceArray={attendenceData}
-        />
+      <div className="d-flex justify-content-center mt-5 pt-4">
+        <Graph Data={Data} />
       </div>
     </>
   );
 };
 
-export default Dashboard;
+export default DashbTakeoutDiningoard;
