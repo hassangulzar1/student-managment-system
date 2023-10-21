@@ -6,7 +6,7 @@ import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import CheckBoxOutlinedIcon from "@mui/icons-material/CheckBoxOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import classes from "./SideBar.module.css";
-
+import logo from "../assets/admin.png";
 const SideBar = () => {
   const navigate = useNavigate();
 
@@ -39,6 +39,8 @@ const SideBar = () => {
           Manage Students
         </h5>
       </div>
+
+      {/* this dive causing Issue  */}
       <div
         style={{
           display: "flex",
@@ -47,13 +49,17 @@ const SideBar = () => {
           textAlign: "center",
         }}
       >
-        <img src="" style={{ borderRadius: "50%" }} alt="Avatar" />
-        <h6>Name of Admin</h6>
+        <img
+          src={logo}
+          style={{ aspectRatio: "1/1", borderRadius: "100%" }}
+          alt="Avatar"
+        />
+        <h6>Muhammad Hassan</h6>
         <h5 style={{ color: "#FEAF00" }}>Admin</h5>
       </div>
 
       <ul
-        className={`nav nav-pills flex-column mb-auto mt-3 ${classes["slide-bar"]}`}
+        className={`nav nav-pills flex-column mb-auto ${classes["slide-bar"]}`}
       >
         <li className="my-3 text-center">
           <NavLink
