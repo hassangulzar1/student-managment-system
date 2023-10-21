@@ -33,7 +33,11 @@ const DasboardBoxes = ({
         <p style={{ color: titleColor, marginTop: ".2rem" }}>{title}</p>
         <h5>
           {!count ? (
-            <div className={`spinner-grow ` + spinnerColor} role="status"></div>
+            <div
+              className={`spinner-grow`}
+              style={{ color: spinnerColor }}
+              role="status"
+            ></div>
           ) : (
             <CountUp end={count} duration={1}></CountUp>
           )}

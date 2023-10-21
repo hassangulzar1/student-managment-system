@@ -9,22 +9,28 @@ import { getDocs, collection } from "firebase/firestore";
 const Dashboard = () => {
   const [totalStudents, setTotalStudents] = useState(null);
   const [totalCourses, setTotalCourses] = useState(null);
-
+  const [totalAttendence, setTotalAttendence] = useState(null);
   useEffect(() => {
     const dataFetching = async () => {
       let studentsArray = [];
       let coursesArray = [];
+      let attendenceArray = [];
       try {
         const studentsData = await getDocs(collection(db, "students"));
         const coursesData = await getDocs(collection(db, "courses"));
+        const attendenceData = await getDocs(collection(db, "attendence"));
         studentsData.forEach((doc) => {
           studentsArray.push(doc.data());
         });
         coursesData.forEach((doc) => {
           coursesArray.push(doc.data());
         });
+        attendenceData.forEach((doc) => {
+          attendenceArray.push(doc.data());
+        });
         setTotalStudents(studentsArray.length);
         setTotalCourses(coursesArray.length);
+        setTotalAttendence(attendenceArray.length);
       } catch (error) {
         toast.error("data fetching error: " + error.message);
       }
@@ -39,7 +45,7 @@ const Dashboard = () => {
         titleColor="black"
         title="Students"
         count={totalStudents}
-        spinnerColor="text-info"
+        spinnerColor="#74c1ed"
         Icon={
           <SchoolOutlinedIcon sx={{ fontSize: "3rem", color: "#74c1ed" }} />
         }
@@ -48,8 +54,8 @@ const Dashboard = () => {
         className="coursesBox"
         titleColor="black"
         title="Courses"
+        spinnerColor="#ee95c5"
         count={totalCourses}
-        spinnerColor="text-danger"
         Icon={
           <BookmarkBorderOutlinedIcon
             sx={{ fontSize: "3rem", color: "#ee95c5" }}
@@ -60,7 +66,8 @@ const Dashboard = () => {
         className="attendeceBox"
         titleColor="white"
         title="Attendence"
-        count={1}
+        spinnerColor="white"
+        count={totalAttendence}
         Icon={
           <PersonOutlineOutlinedIcon
             sx={{ fontSize: "3rem", color: "white" }}
