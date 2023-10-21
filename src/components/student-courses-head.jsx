@@ -27,7 +27,6 @@ const StudentCoursesHead = (props) => {
           onClick={modalOpenerHandler}
           size="medium"
           sx={{
-            color: "black",
             marginTop: ".4rem",
             backgroundColor: "#FEAF00",
             paddingX: "1rem",
