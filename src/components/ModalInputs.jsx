@@ -218,9 +218,10 @@ const ModalInputs = () => {
 
     const checkIfExist = prevAttendence.filter((data) => {
       if (
-        data.studentId === selectedStudent &&
-        data.courseId === selectedCourse &&
-        data.date === enteredDate
+        data.studentId === selectedStudent.id &&
+        data.courseId === selectedCourse.id &&
+        new Date(data.date).toDateString() ===
+          new Date(enteredDate).toDateString()
       ) {
         return data;
       }
@@ -228,7 +229,6 @@ const ModalInputs = () => {
     if (checkIfExist.length > 0) {
       return toast.error("you already mark this student attendence");
     }
-
     dispatch(studentDataActions.startloading());
     if (!isEditingMode) {
       let id = Math.random().toString(36).slice(2);
