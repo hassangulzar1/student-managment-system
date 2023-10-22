@@ -6,12 +6,18 @@ import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined
 import { db } from "../../config/firebase-config";
 import { getDocs, collection } from "firebase/firestore";
 import Graph from "./Graph";
-import { TakeoutDining } from "@mui/icons-material";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+
 const Dashboard = () => {
+  const [date, setDate] = useState(null);
   const [studentsData, setStudentsData] = useState([]);
   const [coursesData, setCoursesData] = useState([]);
   const [attendenceData, setAttendenceData] = useState([]);
   const [Data, setData] = useState([]);
+  const [filteredAttendence, setFilteredAttendence] = useState([]);
 
   useEffect(() => {
     const dataFetching = async () => {
@@ -47,7 +53,7 @@ const Dashboard = () => {
     let courseName = "";
     coursesData.forEach((element, i) => {
       courseName = coursesData[i].title;
-      attendenceData.map((e) => {
+      filteredAttendence.map((e) => {
         if (element.id === e.courseId) {
           if (e.status === "present") {
             present++;
@@ -62,7 +68,15 @@ const Dashboard = () => {
       courseName = "";
     });
     setData(data);
-  }, [studentsData, coursesData, attendenceData]);
+  }, [studentsData, coursesData, filteredAttendence]);
+
+  useEffect(() => {
+    const attendenceAfterFilter = attendenceData.filter(
+      (e) => new Date(e.date).toDateString() == new Date(date).toDateString()
+    );
+    setFilteredAttendence(attendenceAfterFilter);
+  }, [date]);
+
   return (
     <>
       <div className="d-flex justify-content-center">
@@ -101,11 +115,39 @@ const Dashboard = () => {
           }
         />
       </div>
-      <div className="d-flex justify-content-center mt-5 pt-4">
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-around",
+          marginTop: "1rem",
+          alignItems: "center",
+        }}
+      >
+        <h2
+          style={{
+            fontFamily: "'Montserrat', sans-serif",
+            fontWeight: "bold",
+            cursor: "pointer",
+          }}
+        >
+          Students Status per Course
+        </h2>
+        <div>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DemoContainer components={["DatePicker"]}>
+              <DatePicker
+                onChange={(e) => setDate(e)}
+                label="Attendence Per Date"
+              />
+            </DemoContainer>
+          </LocalizationProvider>
+        </div>
+      </div>
+      <div className="d-flex justify-content-center mt-3">
         <Graph Data={Data} />
       </div>
     </>
   );
 };
 
-export default DashbTakeoutDiningoard;
+export default Dashboard;
