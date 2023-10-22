@@ -10,9 +10,12 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
 
 const Dashboard = () => {
   const [date, setDate] = useState(null);
+  const [checkBox, setCheckBox] = useState(false);
   const [studentsData, setStudentsData] = useState([]);
   const [coursesData, setCoursesData] = useState([]);
   const [attendenceData, setAttendenceData] = useState([]);
@@ -74,8 +77,22 @@ const Dashboard = () => {
     const attendenceAfterFilter = attendenceData.filter(
       (e) => new Date(e.date).toDateString() == new Date(date).toDateString()
     );
-    setFilteredAttendence(attendenceAfterFilter);
-  }, [date]);
+
+    setFilteredAttendence(checkBox ? attendenceData : attendenceAfterFilter);
+  }, [date, checkBox]);
+
+  const checkBoxHandler = (e) => {
+    if (e.target.checked) {
+      setDate(null);
+      setCheckBox(true);
+    } else {
+      setCheckBox(false);
+    }
+  };
+  const dateChangeHandler = (e) => {
+    setDate(e);
+    setCheckBox(false);
+  };
 
   return (
     <>
@@ -132,15 +149,22 @@ const Dashboard = () => {
         >
           Students Status per Course
         </h2>
-        <div>
+        <div style={{ textAlign: "center" }}>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DemoContainer components={["DatePicker"]}>
               <DatePicker
-                onChange={(e) => setDate(e)}
-                label="Attendence Per Date"
+                value={date}
+                onChange={dateChangeHandler}
+                label={checkBox ? "Overall Attendence" : "Attendence Per Date"}
               />
             </DemoContainer>
           </LocalizationProvider>
+          <FormControlLabel
+            checked={checkBox}
+            onChange={checkBoxHandler}
+            control={<Checkbox />}
+            label="Overall Attendence"
+          />
         </div>
       </div>
       <div className="d-flex justify-content-center mt-3">
