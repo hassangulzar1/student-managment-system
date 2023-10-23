@@ -93,7 +93,6 @@ const Dashboard = () => {
     setDate(e);
     setCheckBox(false);
   };
-
   return (
     <>
       <div className="d-flex justify-content-center">
@@ -168,7 +167,8 @@ const Dashboard = () => {
         </div>
       </div>
       <div className="d-flex justify-content-center mt-3">
-        <Graph Data={Data} />
+        {Data.length !== 0 && <Graph Data={Data} />}
+        {Data.length === 0 && <p style={{ fontSize: "1.5rem" }}>Loading...</p>}
       </div>
     </>
   );
