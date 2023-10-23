@@ -45,7 +45,7 @@ const UserTable = () => {
   const options = { year: "numeric", month: "long", day: "numeric" };
   //! Latest States Snaps
   const selectorData = useSelector((state) => state.studentsData.studentsData);
-  const [studentData, setStudentData] = useState([]);
+  // const [studentData, setStudentData] = useState([]);
 
   const attendenceData = useSelector(
     (state) => state.attendence.attendenceData
@@ -78,17 +78,19 @@ const UserTable = () => {
       return;
     }
   };
-  const searching = useSelector((state) => state.attendence.HeaderSearch);
-  const data = selectorData.filter((e) => {
-    return (
-      e.name.includes(searching) ||
-      e.email.includes(searching) ||
-      e.gender.includes(searching)
-    );
-  });
-  useEffect(() => {
-    setStudentData(data);
-  }, [searching]);
+  //   const searching = useSelector((state) => state.attendence.HeaderSearch);
+  //
+  //   useEffect(() => {
+  //     const data = selectorData.filter((e) => {
+  //       return (
+  //         e.name.includes(searching) ||
+  //         e.email.includes(searching) ||
+  //         e.gender.includes(searching)
+  //       );
+  //     });
+  //     setStudentData(data);
+  //   }, [searching]);
+
   return (
     <div style={{ margin: "0 .5rem" }}>
       <TableContainer>
@@ -106,7 +108,7 @@ const UserTable = () => {
           </TableHead>
           <TableBody sx={{ backgroundColor: "white" }}>
             {!isLoading &&
-              studentData.map((data, i) => (
+              selectorData.map((data, i) => (
                 <TableRow
                   key={data.id}
                   sx={{
@@ -144,7 +146,7 @@ const UserTable = () => {
           </TableBody>
         </Table>
         {isLoading && <p style={fallbackText}>Data Fetching...</p>}
-        {!isLoading && studentData.length === 0 && (
+        {!isLoading && selectorData.length === 0 && (
           <p style={fallbackText}>No Data Found!</p>
         )}
       </TableContainer>
