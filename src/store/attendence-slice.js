@@ -3,6 +3,7 @@ const initialState = {
   studentsData: [],
   coursesData: [],
   attendenceData: [],
+  HeaderSearch: "",
 };
 
 const attendenceDataSlice = createSlice({
@@ -17,6 +18,9 @@ const attendenceDataSlice = createSlice({
     },
     addingAttendence(state, action) {
       state.attendenceData = action.payload;
+    },
+    searchHandling(state, action) {
+      state.HeaderSearch = action.payload;
     },
   },
 });
