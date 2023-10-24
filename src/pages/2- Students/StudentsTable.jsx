@@ -78,18 +78,21 @@ const UserTable = () => {
       return;
     }
   };
-  //   const searching = useSelector((state) => state.attendence.HeaderSearch);
-  //
+  // const searching = useSelector((state) => state.attendence.HeaderSearch);
+
   //   useEffect(() => {
-  //     const data = selectorData.filter((e) => {
-  //       return (
-  //         e.name.includes(searching) ||
-  //         e.email.includes(searching) ||
-  //         e.gender.includes(searching)
-  //       );
-  //     });
-  //     setStudentData(data);
-  //   }, [searching]);
+  //     if (selectorData[0].name !== undefined) {
+  //       const data = selectorData.filter((e) => {
+  //         return (
+  //           e.name.includes(searching) ||
+  //           e.email.includes(searching) ||
+  //           e.gender.includes(searching)
+  //         );
+  //       });
+  //
+  //       setStudentData(data);
+  //     }
+  //   }, [searching, selectorData]);
 
   return (
     <div style={{ margin: "0 .5rem" }}>
