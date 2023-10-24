@@ -198,8 +198,8 @@ const ModalInputs = () => {
         await updateDoc(doc(db, "courses", id), {
           id: id,
           title: enteredName,
-          code: enteredSallary,
-          desc: enteredDate,
+          code: enteredDate,
+          desc: enteredSallary,
         });
         dispatch(studentDataActions.dataChanging());
         dispatch(modalActions.closeModal());
