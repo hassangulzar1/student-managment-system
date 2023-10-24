@@ -67,7 +67,7 @@ const AttendenceTable = () => {
       try {
         await deleteDoc(doc(db, "attendence", Id));
         dispatch(studentDataActions.dataChanging());
-        toast.success(`Student Removed Successfully`);
+        toast.success(`Attendence Removed Successfully`);
       } catch (error) {
         toast.error(error.message);
       }
