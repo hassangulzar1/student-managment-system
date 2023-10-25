@@ -272,7 +272,6 @@ const ModalInputs = () => {
   return (
     <div
       style={{
-        display: "flex",
         justifyContent: "center",
         padding: "0 50px",
         flexDirection: "column",
